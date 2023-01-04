@@ -16,4 +16,15 @@
         <br>
         <button type="submit">Create</button>
     </form>
+
+    @foreach ($tasks as $task )
+        <br>
+        <br>    
+            Title: {{ $task->task_title }}
+        <br>
+            Description: {{ $task->task_description }}
+        <br>
+        <br>
+        @endforeach
+</body>
 </html>
