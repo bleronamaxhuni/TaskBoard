@@ -11,10 +11,17 @@ class TaskController extends Controller
 {
     public function index()
     {
+        return view('task');
     }
 
     public function store(Request $request)
     {
+        $tasks = [
+            'task_title' => $request->input( 'task_title'),
+            'task_description' => $request->input('task_description'),
+            'published_at' => $request->input('published_at'),
+        ];
+        dd(Task::create($tasks));
 
     }
 

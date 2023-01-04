@@ -18,3 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/create', [TaskController::class, 'index']);
+Route::post('/create', [TaskController::class, 'store']);
