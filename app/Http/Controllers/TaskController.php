@@ -11,17 +11,20 @@ class TaskController extends Controller
 {
     public function index()
     {
-        return view('task');
+        $tasks = Task::all();
+
+        return view('task', ['tasks' => $tasks]);
     }
 
     public function store(Request $request)
     {
         $tasks = [
-            'task_title' => $request->input( 'task_title'),
+            'task_title' => $request->input('task_title'),
             'task_description' => $request->input('task_description'),
-            'published_at' => $request->input('published_at'),
+            'published' => $request->input('published'),
         ];
-        dd(Task::create($tasks));
+        Task::create($tasks);
+        return back()->with("message","Task has been created");
 
     }
 
