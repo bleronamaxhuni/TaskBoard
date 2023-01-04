@@ -21,7 +21,7 @@ class TaskController extends Controller
         $tasks = [
             'task_title' => $request->input('task_title'),
             'task_description' => $request->input('task_description'),
-            'published' => $request->input('published'),
+            'published_at' => $request->input('published_at'),
         ];
         Task::create($tasks);
         return back()->with("message","Task has been created");
