@@ -7,6 +7,17 @@
     <title>{{ config('app.name')}}</title>
 </head>
 <body>
+    @if (Session::has('message'))
+    {{Session::get('message')}}
+    @endif
+
+    @if($errors->has('task_title'))
+        {{$errors->first('task_title')}}
+    @endif
+    @if($errors->has('task_description'))
+        {{$errors->first('task_description')}}
+    @endif
+
     <h1> Create a To Do</h1>
     <form action="/create" method="POST">
         @csrf
