@@ -33,18 +33,25 @@ class TaskController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(Task $task)
     {
-        //
+        return view('edit', ['task' => $task]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Task $task)
     {
-        //
+        $tasks = [
+            'task_title' => $request->input('task_title'),
+            'task_description' => $request->input('task_description'),
+            'published_at' => $request->input('published_at'),
+        ];
+        $task->update($tasks);
+        return back()->with("message","Task has been updated");
     }
 
-    public function destroy($id)
+    public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        return back()->with('message', "Task has been deleted");
     }
 }
