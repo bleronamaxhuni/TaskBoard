@@ -18,7 +18,7 @@
         {{$errors->first('task_description')}}
     @endif
     <h1>Edit Your Task</h1>
-    <form action="/create/{{$task['id']}}" method="POST">
+    <form action="/tasks/create/{{$task['id']}}" method="POST">
         @csrf
         @method('PATCH')
         <input type="text" placeholder="Task Name" name="task_title" value="{{old('task_title', $task['task_title'])}}" required>
@@ -38,9 +38,5 @@
     Description: {{ $task->task_description }}
     <br>
     Published At: {{ $task->published_at }}
-<br>
-<br>
-<br>
-<button><a href="/create">Go Back</a></button>
 </body>
 </html>
