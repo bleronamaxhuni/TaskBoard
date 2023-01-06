@@ -19,11 +19,13 @@
         {{$errors->first('task_description')}}
     @endif
 
+    <h1>Create Task</h1>
+    <br>
     <form action="/tasks/create" method="POST">
         @csrf
+        <input type="text" placeholder="Task Name" name="task_title" value="{{old('')}}" required class="border-solid border-2 border-black">
         <br>
-        <br>
-        <br>
+        <textarea type="text" placeholder="Task Description" name="task_description" value="{{old('')}}" required class="border-solid border-2 border-black"></textarea>
         <br>
         <input  type="date" name="published_at" value="{{old('published_at')}}" required class="border-solid border-2 border-black">
         <br>
