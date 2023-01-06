@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ config('app.name')}}</title>
+    @vite('resources/css/app.css')
 </head>
 <body>
     @if (Session::has('message'))
@@ -23,7 +24,11 @@
         <br>
         <br>
         <br>
-        <button type="submit">Create</button>
+        <br>
+        <input  type="date" name="published_at" value="{{old('published_at')}}" required class="border-solid border-2 border-black">
+        <br>
+        <br>
+        <button type="submit" class="border-solid border-2 border-black">Create</button>
     </form>
 
     @foreach ($tasks as $task )
@@ -35,11 +40,13 @@
         <br>
             Published At: {{ $task->published_at }}
         <br>
-        <button><a href="create/{{ $task['id'] }}">Edit</a></button>
-        <form action="create/{{ $task['id'] }}" method="POST">
+
+        <button class="border-solid border-2 border-black"><a href="/tasks/create/{{ $task['id'] }}">Edit</a></button>
         <form action="/tasks/create/{{ $task['id'] }}" method="POST" >
             @csrf
             @method('DELETE')
+            <input type="submit" name="" value="delete" class="border-solid border-2 border-black">
+
         </form>
         <br>
         <br>
