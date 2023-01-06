@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/tasks', function () {
+    return view('home');
 });
-Route::get('/create', [TaskController::class, 'index']);
-Route::post('/create', [TaskController::class, 'store']);
-Route::get('/create/{task}',[TaskController::class,'edit']);
-Route::patch('/create/{task}', [TaskController::class, 'update']);
-Route::patch('/create/{task}', [TaskController::class, 'update']);
-Route::delete('/create/{task}', [TaskController::class, 'destroy']);
+Route::get('tasks/create', [TaskController::class, 'index']);
+Route::post('tasks/create', [TaskController::class, 'store']);
+Route::get('tasks/create/{task}',[TaskController::class,'edit']);
+Route::patch('tasks/create/{task}', [TaskController::class, 'update']);
+Route::patch('tasks/create/{task}', [TaskController::class, 'update']);
+Route::delete('tasks/create/{task}', [TaskController::class, 'destroy']);

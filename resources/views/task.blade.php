@@ -19,14 +19,10 @@
         {{$errors->first('task_description')}}
     @endif
 
-    <h1>Create Task</h1>
-    <form action="/create" method="POST">
+    <form action="/tasks/create" method="POST">
         @csrf
-        <input type="text" placeholder="Task Name" name="task_title" value="{{old('')}}" required>
         <br>
-        <textarea type="text" placeholder="Task Description" name="task_description" value="{{old('')}}" required></textarea>
         <br>
-        <input  type="date" name="published_at" value="{{old('published_at')}}" required>
         <br>
         <br>
         <input  type="date" name="published_at" value="{{old('published_at')}}" required class="border-solid border-2 border-black">
@@ -44,6 +40,7 @@
         <br>
             Published At: {{ $task->published_at }}
         <br>
+
         <button class="border-solid border-2 border-black"><a href="/tasks/create/{{ $task['id'] }}">Edit</a></button>
         <form action="/tasks/create/{{ $task['id'] }}" method="POST" >
             @csrf
