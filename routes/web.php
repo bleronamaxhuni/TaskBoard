@@ -19,3 +19,7 @@ Route::get('/', function () {
 });
 Route::get('/create', [TaskController::class, 'index']);
 Route::post('/create', [TaskController::class, 'store']);
+Route::get('/create/{task}',[TaskController::class,'edit']);
+Route::patch('/create/{task}', [TaskController::class, 'update']);
+Route::patch('/create/{task}', [TaskController::class, 'update']);
+Route::delete('/create/{task}', [TaskController::class, 'destroy']);

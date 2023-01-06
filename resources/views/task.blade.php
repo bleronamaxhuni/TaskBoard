@@ -18,12 +18,14 @@
         {{$errors->first('task_description')}}
     @endif
 
-    <h1> Create a To Do</h1>
+    <h1>Create Task</h1>
     <form action="/create" method="POST">
         @csrf
-        <input type="text" placeholder="Task Name" name="task_title" required>
+        <input type="text" placeholder="Task Name" name="task_title" value="{{old('')}}" required>
         <br>
-        <textarea type="text" placeholder="Task Description" name="task_description" required></textarea>
+        <textarea type="text" placeholder="Task Description" name="task_description" value="{{old('')}}" required></textarea>
+        <br>
+        <input  type="date" name="published_at" value="{{old('published_at')}}" required>
         <br>
         <button type="submit">Create</button>
     </form>
@@ -34,6 +36,15 @@
             Title: {{ $task->task_title }}
         <br>
             Description: {{ $task->task_description }}
+        <br>
+            Published At: {{ $task->published_at }}
+        <br>
+        <button><a href="create/{{ $task['id'] }}">Edit</a></button>
+        <form action="create/{{ $task['id'] }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <input type="submit" name="" value="delete">
+        </form>
         <br>
         <br>
         @endforeach
