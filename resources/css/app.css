@@ -1,3 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.completed {background-color: rgb(187 247 208); color:  rgb(22 163 74);}
+.not.completed {background-color:rgb(254 202 202); color: rgb(127 29 29);}

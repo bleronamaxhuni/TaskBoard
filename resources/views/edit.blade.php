@@ -5,38 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ config('app.name')}}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+    integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @vite('resources/css/app.css')
 </head>
-<body>
-    @if (Session::has('message'))
-    {{Session::get('message')}}
-    @endif
+<body class="relative bg-gray-100 h-full">
+    <x-layouts.sidebar></x-layouts.sidebar>
 
-    @if($errors->has('task_title'))
-        {{$errors->first('task_title')}}
-    @endif
-    @if($errors->has('task_description'))
-        {{$errors->first('task_description')}}
-    @endif
-    <h1>Edit Your Task</h1>
-    <form action="/tasks/create/{{$task['id']}}" method="POST">
-        @csrf
-        @method('PATCH')
-        <input type="text" placeholder="Task Name" name="task_title" value="{{old('task_title', $task['task_title'])}}" required>
-        <br>
-        <textarea type="text"  name="task_description" required> {{old('task_description', $task['task_description'])}}</textarea>
-        <br>
-        <input  type="date" name="published_at" value="{{old('published_at', $task['published_at'])}}" required>
-        <br>
-        <button type="submit">Update Task</button>
-    </form>
 
-<br>
-<br>
-<br>
-    Title: {{ $task->task_title }}
-    <br>
-    Description: {{ $task->task_description }}
-    <br>
-    Published At: {{ $task->published_at }}
+    <div class="text-center">
+        @if (Session::has('message'))
+        {{Session::get('message')}}
+        @endif
+        @if($errors->has('task_title'))
+            {{$errors->first('task_title')}}
+        @endif
+        @if($errors->has('task_description'))
+            {{$errors->first('task_description')}}
+        @endif
+    </div>
+    <div class="container ml-72 w-10/12 px-4 py-9 p-4 sm:px-8">
+        <h1 class="text-3xl font-bold">Edit Task</h1>
+        <div class="py-8">
+            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                <div class="inline-block min-w-full shadow-md rounded-lg">
+                    <table class="min-w-full leading-normal">
+                        <x-layouts.edit-task :task=$task></x-layouts.edit-task>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
