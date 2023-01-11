@@ -62,7 +62,11 @@
                                 <td class="px-5 py-5 bg-white text-sm">
                                     @if($task->due_date != null)
                                     <p class="text-gray-900 whitespace-no-wrap py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded text-center">
-                                        Due on {{ $task->due_date}}
+                                        {{-- Due on {{ $task->due_date}} --}}
+                                        @if ($task->due_date)
+                                    <span class="text-red-400">
+                                        {{ $task->due_date?->diffForHumans() }}</span>
+                                @endif
                                     </p>
                                     @endif
                                 </td>
