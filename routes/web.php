@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TaskController;
+use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/tasks', function () {
+Route::get('/', function () {
     return view('home');
 });
 Route::get('tasks/create', [TaskController::class, 'index']);
@@ -23,3 +24,5 @@ Route::get('tasks/create/{task}',[TaskController::class,'edit']);
 Route::patch('tasks/create/{task}', [TaskController::class, 'update']);
 Route::patch('tasks/create/{task}', [TaskController::class, 'update']);
 Route::delete('tasks/create/{task}', [TaskController::class, 'destroy']);
+Route::patch('tasks/create/{task}/completed', [TaskController::class, 'completed']);
+Route::get('tasks/create', [TaskController::class, 'search']);
