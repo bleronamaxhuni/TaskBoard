@@ -26,26 +26,8 @@
         @endif
         @if($errors->has('task_description'))
         {{$errors->first('task_description')}}
-<<<<<<< Updated upstream
-    @endif
-
-    <h1>Create Task</h1>
-    <br>
-    <form action="/tasks/create" method="POST">
-        @csrf
-        <input type="text" placeholder="Task Name" name="task_title" value="{{old('')}}" required class="border-solid border-2 border-black">
-        <br>
-        <textarea type="text" placeholder="Task Description" name="task_description" value="{{old('')}}" required class="border-solid border-2 border-black"></textarea>
-        <br>
-        <input  type="date" name="published_at" value="{{old('published_at')}}" required class="border-solid border-2 border-black">
-        <br>
-        <br>
-        <button type="submit" class="border-solid border-2 border-black">Create</button>
-    </form>
-=======
         @endif
     </div>
->>>>>>> Stashed changes
 
     <div class="ml-72 p-4  lg:ml-0 lg:mt-12 lg:w-full">
         <div class="flex w-full justify-between py-9">
