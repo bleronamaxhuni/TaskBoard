@@ -61,24 +61,19 @@
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm">
                                     @if($task->due_date != null)
-                                    <p class="text-gray-900 whitespace-no-wrap py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded text-center">
-                                        {{-- Due on {{ $task->due_date}} --}}
+                                    <p
+                                        class="text-gray-900 whitespace-no-wrap py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded text-center">
                                         @if ($task->due_date)
-                                    <span class="text-red-400">
-                                        {{ $task->due_date?->diffForHumans() }}</span>
-                                @endif
+                                        <span class="text-red-400">
+                                            {{ $task->due_date?->diffForHumans() }}</span>
+                                        @endif
                                     </p>
                                     @endif
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm text-center">
                                     <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
-                                        <span class="p-2 rounded-full
-                                @if ($task->completed_at == null)
-                                not completed
-                                @else
-                                completed
-                                @endif
-                                ">
+                                        <span
+                                            class="p-2 rounded-full @if ($task->completed_at == null) not completed @else completed @endif">
                                             @if ($task->completed_at == null)Not Completed
                                             @else Completed
                                             @endif
@@ -101,59 +96,10 @@
                                                 value="Delete" class="md:hidden"></button>
                                     </form>
                                 </td>
-
                                 @empty
                                 <td class="px-5 py-5 text-bold">Task Not Found</td>
                             </tr>
                             @endforelse
-                            {{-- @foreach($tasks as $task)
-                            <tr class="border-b border-gray-200">
-                                <td class="px-5 py-5 bg-white text-sm">
-                                    <div class="flex">
-                                        <div class="ml-3">
-                                            <p class="text-gray-900 whitespace-no-wrap">
-                                                {{ $task->task_title }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-5 py-5 bg-white text-sm">
-                                    <p class="text-gray-900 whitespace-no-wrap">{{ Str::limit($task->task_description,
-                                        25) }}</p>
-                                </td>
-                                <td class="px-5 py-5 bg-white text-sm text-center">
-                                    <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
-                                        <span class="p-2 rounded-full
-                                @if ($task->completed_at == null)
-                                not completed
-                                @else
-                                completed
-                                @endif
-                                ">
-                                            @if ($task->completed_at == null)Not Completed
-                                            @else Completed
-                                            @endif
-                                        </span>
-                                    </span>
-                                </td>
-                                <td
-                                    class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2">
-                                    <button
-                                        class="rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"><a
-                                            href="/tasks/create/{{ $task['id'] }}"><i
-                                                class="fa-solid fa-pen-to-square"></i> <span
-                                                class="md:hidden">Edit</span></a></button>
-                                    <form action="/tasks/create/{{ $task['id'] }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button
-                                            class="rounded-lg px-4 py-2 bg-red-600 text-red-100 hover:bg-red-700 duration-300"><i
-                                                class="fa-solid fa-trash"></i> <input type="submit" name=""
-                                                value="Delete" class="md:hidden"></button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>
