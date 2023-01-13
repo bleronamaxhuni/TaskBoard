@@ -1,23 +1,3 @@
-{{-- <aside class="w-64 fixed inset-y-0 left-0  shadow-md" aria-label="Sidebar">
-    <div class="px-3 py-4 overflow-y-auto rounded bg-gray-50 h-full">
-        <a href="/" class="flex items-center pl-2.5 mb-5">
-            <img src="{{ asset('/images/badge.png') }}" class="h-6 mr-3 sm:h-7" />
-            <span class="self-center text-xl font-semibold whitespace-nowrap ">TaskBoard</span>
-        </a>
-        <ul class="space-y-2">
-            <li>
-                <a href="{!! url('/tasks/create') !!}"
-                    class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100">
-                    <i
-                        class="fa-solid fa-list-check flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900 "></i>
-                    <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-lg ">Tasks</span>
-                </a>
-            </li>
-
-        </ul>
-    </div>
-</aside> --}}
-
 <div class="w-64 fixed inset-y-0 left-0" aria-label="Sidebar">
         <div class="flex flex-no-wrap">
             <div class="w-64 absolute sm:relative bg-gray-50 shadow h-full flex-col justify-between flex lg:hidden">
@@ -30,7 +10,7 @@
                     </div>
                     <ul class="space-y-2">
                         <li class="flex w-full">
-                            <a href="{!! url('/tasks/create') !!}"
+                            <a href="{!! url('/tasks') !!}"
                                 class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-6 rounded  hover:bg-gray-200 w-full">
                             <i
                                     class="fa-solid fa-list-check flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900 "></i>
@@ -49,7 +29,7 @@
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <button aria-label="Close sidebar" id="closeSideBar"
-                    class="hidden bg-transparent absolute right-0 p-5 flex items-center justify-center cursor-pointer text-white"
+                    class="bg-transparent absolute right-0 p-5 flex items-center justify-center cursor-pointer text-white"
                     onclick="sidebarHandler(false)">
                     <i class="fa-solid fa-xmark text-black text-xl mt-1"></i>
                 </button>
@@ -62,7 +42,7 @@
                     </div>
                     <ul class="space-y-2">
                         <li class="flex w-full">
-                            <a href="{!! url('/tasks/create') !!}"
+                            <a href="{!! url('/tasks') !!}"
                                 class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-6 rounded hover:bg-gray-200 w-full">
                                 <i
                                     class="fa-solid fa-list-check flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900 "></i>

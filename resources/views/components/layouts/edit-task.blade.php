@@ -24,7 +24,7 @@
         </tr>
     </thead>
     <tr>
-        <form action="/tasks/create/{{$task['id']}}" method="POST">
+        <form action="/tasks/{{$task['id']}}" method="POST">
             @csrf
             @method('PATCH')
             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -44,7 +44,7 @@
             </td>
         </form>
         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
-            <form action="/tasks/create/{{ $task['id'] }}/completed" method="POST">
+            <form action="/tasks/{{ $task['id'] }}/completed" method="POST">
                 @csrf
                 @method('PATCH')
                 @if ($task->completed_at == null)

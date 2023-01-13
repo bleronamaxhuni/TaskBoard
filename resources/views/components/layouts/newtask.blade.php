@@ -3,9 +3,9 @@
         Task</button>
 </div>
 <div class="flex w-full justify-end ml-[-35px] lg:ml-0">
-    <div class="overflow-y-auto top-0 w-8/12 lg:w-full bg-white p-8 rounded-lg hidden shadow-lg shadow-gray-300 bg-white mt-4"
+    <div class="overflow-y-auto top-0 w-8/12 lg:w-full p-8 rounded-lg hidden shadow-lg shadow-gray-300 bg-white mt-4"
         id="modal">
-        <form action="/tasks/create" method="POST">
+        <form action="/tasks" method="POST">
             @csrf
             <input type="text" placeholder="Task Name" name="task_title" value="{{old('task_title')}}" required
                 class="w-full bg-gray-200 p-2 mt-2 mb-3 rounded-sm">
