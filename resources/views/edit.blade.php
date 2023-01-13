@@ -25,7 +25,7 @@
             {{$errors->first('task_description')}}
         @endif
     </div>
-    <div class="container ml-72 w-10/12 px-4 py-9 p-4 sm:px-8">
+    <div class="ml-72 w-10/12 px-4 py-9 p-4 sm:px-8">
         <h1 class="text-3xl font-bold">Edit Task</h1>
         <div class="py-8">
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">

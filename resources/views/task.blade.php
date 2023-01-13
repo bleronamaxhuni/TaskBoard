@@ -37,7 +37,7 @@
         <x-layouts.newtask></x-layouts.newtask>
     </div>
 
-    <div class="container ml-72 w-10/12 px-4 lg:ml-0 lg:w-full">
+    <div class="ml-72 w-10/12 px-4 lg:ml-0 lg:w-full">
         <div class="py-8">
             <div class="-mx-4 sm:-mx-8 px-4 py-4 overflow-x-auto">
                 <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
@@ -62,7 +62,7 @@
                                 <td class="px-5 py-5 bg-white text-sm">
                                     @if($task->due_date != null)
                                     <p
-                                        class="text-gray-900 whitespace-no-wrap py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded text-center">
+                                        class="whitespace-no-wrap py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded text-center">
                                         @if ($task->due_date)
                                         <span class="text-red-400">
                                             {{ $task->due_date?->diffForHumans() }}</span>
@@ -84,10 +84,10 @@
                                     class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2">
                                     <button
                                         class="rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"><a
-                                            href="/tasks/create/{{ $task['id'] }}"><i
+                                            href="/tasks/{{ $task['id'] }}/edit"><i
                                                 class="fa-solid fa-pen-to-square"></i> <span
                                                 class="md:hidden">Edit</span></a></button>
-                                    <form action="/tasks/create/{{ $task['id'] }}" method="POST">
+                                    <form action="/tasks/{{ $task['id'] }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button
