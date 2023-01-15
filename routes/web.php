@@ -16,13 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('dashboard.home');
 });
-Route::get('tasks', [TaskController::class, 'index']);
-Route::post('tasks', [TaskController::class, 'store']);
-Route::get('tasks/{task}/edit',[TaskController::class,'edit']);
-Route::patch('tasks/{task}', [TaskController::class, 'update']);
-Route::patch('tasks/{task}', [TaskController::class, 'update']);
-Route::delete('tasks/{task}', [TaskController::class, 'destroy']);
-Route::patch('tasks/{task}/completed', [TaskController::class, 'completed']);
-Route::get('tasks', [TaskController::class, 'search']);
+Route::get('tasks', [TaskController::class, 'index'])->name('tasks.index');
+Route::post('tasks/create', [TaskController::class, 'store'])->name('tasks.store');
+Route::get('tasks/{task}/edit',[TaskController::class,'edit'])->name('tasks.edit');
+Route::patch('tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
+Route::delete('tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.update');
+Route::patch('tasks/{task}/completed', [TaskController::class, 'completed'])->name('tasks.completed');
