@@ -9,11 +9,15 @@ use Carbon\Carbon;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::all();
-
-        return view('task', ['tasks' => $tasks]);
+        if(request('search')){
+            $tasks = Task::where('task_title','like','%'.request('search').'%')->orWhere('task_description','like','%'.request('search').'%')
+            ->get();
+        }else{
+            $tasks = Task::all();
+        }
+        return view('tasks.index', ['tasks' => $tasks]);
     }
 
     public function store(Request $request)
@@ -53,15 +57,6 @@ class TaskController extends Controller
             $task->update(['completed_at' => NULL]);
             return back()->with("message", "Task has been uncompleted");
         }
-    }
-    public function search(Request $request){
-        if(request('search')){
-            $tasks = Task::where('task_title','like','%'.request('search').'%')->orWhere('task_description','like','%'.request('search').'%')
-            ->get();
-        }else{
-            $tasks = Task::all();
-        }
-        return view('task')->with('tasks', $tasks);
     }
     
     public function destroy(Task $task)
