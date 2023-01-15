@@ -30,7 +30,7 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         $task['due_date'] = Carbon::parse($task['due_date'])->format('Y-m-d');
-        return view('edit', ['task' => $task]);
+        return view('tasks.edit', ['task' => $task]);
     }
 
     public function update(Request $request, Task $task)
