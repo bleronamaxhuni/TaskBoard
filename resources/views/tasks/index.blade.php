@@ -32,9 +32,9 @@
     <div class="ml-72 p-4  lg:ml-0 lg:mt-12 lg:w-full">
         <div class="flex w-full justify-between py-9">
             <h1 class="text-3xl font-bold">Tasks</h1>
-            <x-layouts.search></x-layouts.search>
+            <x-search></x-search>
         </div>
-        <x-layouts.newtask></x-layouts.newtask>
+        <x-newtask></x-newtask>
     </div>
 
     <div class="ml-72 w-10/12 px-4 lg:ml-0 lg:w-full">
