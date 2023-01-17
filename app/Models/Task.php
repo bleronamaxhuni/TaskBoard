@@ -11,7 +11,7 @@ class Task extends Model
     protected $fillable = ['task_title', 'task_description','completed_at','due_date','priority'];
     protected $dates = ['due_date','completed_at'];
 
-    const None = 'None';
+    const Urgent = 'Urgent';
     const High = 'High';
     const Medium = 'Medium';
     const Low = 'Low';
@@ -19,7 +19,7 @@ class Task extends Model
     public static function Priorities()
     {
         return $priorities = [
-            'none' => self::None,
+            'urgent' => self::Urgent,
             'high' => self::High,
             'medium' => self::Medium,
             'low' => self::Low,
