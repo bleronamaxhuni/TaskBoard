@@ -15,9 +15,12 @@ class TaskController extends Controller
             $tasks = Task::where('task_title','like','%'.request('search').'%')->orWhere('task_description','like','%'.request('search').'%')
             ->get();
         }else{
-            $tasks = Task::all();
+            $tasks = Task::paginate(5);
         }
-        return view('tasks.index', ['tasks' => $tasks]);
+        return view('tasks.index', [
+            'tasks' => $tasks,
+            'priorities' => Task::Priorities(),
+        ]);
     }
 
     public function store(Request $request)
@@ -26,6 +29,7 @@ class TaskController extends Controller
             'task_title' => 'required|max:200',
             'task_description' => 'required|max:100000',
             'due_date'=>'after:now|nullable',
+            'priority'=>'nullable',
         ]);
         Task::create($tasks);
         return back()->with("message","Task has been created");
@@ -34,7 +38,10 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         $task['due_date'] = Carbon::parse($task['due_date'])->format('Y-m-d');
-        return view('tasks.edit', ['task' => $task]);
+        return view('tasks.edit', [
+            'task' => $task,
+            'priorities' => Task::Priorities(),
+        ]);
     }
 
     public function update(Request $request, Task $task)
@@ -43,6 +50,8 @@ class TaskController extends Controller
             'task_title' => 'required|max:200',
             'task_description' => 'required|max:100000',
             'due_date'=>'after:now|nullable',
+            'priority'=>'nullable',
+
         ]);
         $task->update($tasks);
         return back()->with("message","Task has been updated");

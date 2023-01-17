@@ -34,14 +34,14 @@
             <h1 class="text-3xl font-bold">Tasks</h1>
             <x-search></x-search>
         </div>
-        <x-newtask></x-newtask>
+        <x-newtask :priorities=$priorities></x-newtask>
     </div>
-
+    
     <div class="ml-72 w-10/12 px-4 lg:ml-0 lg:w-full">
         <div class="py-8">
             <div class="-mx-4 sm:-mx-8 px-4 py-4 overflow-x-auto">
                 <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
-                    <table class="min-w-full leading-normal">
+                    <table class="min-w-full leading-normal bg-white">
                         <x-layouts.tabletitles></x-layouts.tabletitles>
                         <tbody>
                             @forelse($tasks as $task)
@@ -60,6 +60,12 @@
                                         25) }}</p>
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm">
+                                    <p
+                                        class="whitespace-no-wrap py-3 px-3 text-sm focus:outline-none leading-none text-center">
+                                        {{$task->priority}}
+                                    </p>
+                                </td>
+                                <td class="px-5 py-5 bg-white text-sm">
                                     @if($task->due_date != null)
                                     <p
                                         class="whitespace-no-wrap py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded text-center">
@@ -70,30 +76,38 @@
                                     </p>
                                     @endif
                                 </td>
+
                                 <td class="px-5 py-5 bg-white text-sm text-center">
                                     <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
-                                        <span
-                                            class="p-2 rounded-full @if ($task->completed_at == null) not completed @else completed @endif">
-                                            @if ($task->completed_at == null)Not Completed
-                                            @else Completed
+                                        <form action="/tasks/{{ $task['id'] }}/completed" method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            @if ($task->completed_at == null)
+                                            <button type="submit" class="p-2 rounded bg-red-300 text-red-900">Not
+                                                Completed</button>
+                                            @else
+                                            <button type="submit"
+                                                class="p-2 rounded bg-green-300 text-green-900">Completed</button>
                                             @endif
-                                        </span>
+                                        </form>
                                     </span>
                                 </td>
                                 <td
-                                    class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2">
+                                    class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2 h-full">
                                     <button
                                         class="rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"><a
                                             href="/tasks/{{ $task['id'] }}/edit"><i
                                                 class="fa-solid fa-pen-to-square"></i> <span
-                                                class="md:hidden">Edit</span></a></button>
+                                                class="md:hidden">Edit</span></a>
+                                    </button>
                                     <form action="/tasks/{{ $task['id'] }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button
                                             class="rounded-lg px-4 py-2 bg-red-600 text-red-100 hover:bg-red-700 duration-300"><i
                                                 class="fa-solid fa-trash"></i> <input type="submit" name=""
-                                                value="Delete" class="md:hidden"></button>
+                                                value="Delete" class="md:hidden">
+                                        </button>
                                     </form>
                                 </td>
                                 @empty
@@ -102,8 +116,12 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="flex flex-row w-full justify-center bg-white p-3">
+                        {{ $tasks->links() }}
+                    </div>
                 </div>
             </div>
         </div>
 </body>
+
 </html>

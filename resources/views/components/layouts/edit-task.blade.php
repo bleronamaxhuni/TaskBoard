@@ -10,16 +10,16 @@
                 Description
             </th>
             <th
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-xs font-semibold text-gray-700 uppercase tracking-wider text-left">
+                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                Priority
+            </th>
+            <th
+                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">
                 Deadline
             </th>
             <th
                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">
                 Action
-            </th>
-            <th
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-50  text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                Status
             </th>
         </tr>
     </thead>
@@ -35,26 +35,21 @@
                 <textarea class="w-full bg-gray-100 mt-[16px] mb-3 p-2 rounded-sm h-11 resize-none" type="text"
                     name="task_description" required> {{old('task_description', $task['task_description'])}}</textarea>
             </td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <input type="date" name="due_date" id="due_date" value="{{ old('due_date', $task['due_date']) }}">
+            <td class="px-5 py-5 bg-white text-sm">
+                <select id="priority" name="priority"
+                class="w-full bg-gray-200 p-2 mt-2 mb-3 rounded-sm">
+                @foreach ($priorities as $priority)
+                    <option value="{{$priority}}" >{{ $priority }}</option>
+                @endforeach
+            </select>
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                <input type="date" name="due_date" id="due_date" value="{{ old('due_date', $task['due_date'])->format('Y-m-d')}}">
             </td>
             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
                 <button type="submit" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700">Update
                     Task</button>
             </td>
         </form>
-        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
-            <form action="/tasks/{{ $task['id'] }}/completed" method="POST">
-                @csrf
-                @method('PATCH')
-                @if ($task->completed_at == null)
-                <button type="submit" class="py-2 px-4 bg-green-700 text-white rounded hover:bg-green-900 mr-2">Mark as
-                    completed</button>
-                @else
-                <button type="submit" class="py-2 px-4 bg-green-700 text-white rounded hover:bg-green-900 mr-2">Mark as
-                    uncompleted</button>
-                @endif
-            </form>
-        </td>
     </tr>
 </tbody>
