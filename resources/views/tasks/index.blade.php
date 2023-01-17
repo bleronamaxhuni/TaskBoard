@@ -61,16 +61,27 @@
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm">
                                     <p
-                                        class="whitespace-no-wrap py-3 px-3 text-sm focus:outline-none leading-none text-center">
+                                        class="whitespace-no-wrap text-sm focus:outline-none leading-none  rounded text-center">
+                                        <span class="px-3 py-2
+                                        @if ($task->priority == 'High')
+                                            high
+                                            @elseif ($task->priority == 'Medium')
+                                            medium
+                                            @elseif ($task->priority == 'Low')
+                                            low
+                                            @elseif ($task->priority == 'Urgent')
+                                            urgent
+                                        @endif">
                                         {{$task->priority}}
+                                    </span>
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm">
                                     @if($task->due_date != null)
                                     <p
-                                        class="whitespace-no-wrap py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded text-center">
+                                        class="whitespace-no-wrap text-sm focus:outline-none leading-none  text-center">
                                         @if ($task->due_date)
-                                        <span class="text-red-400">
+                                        <span class="text-red-400 bg-red-50 p-2 border-2  rounded border-red-300">
                                             {{ $task->due_date?->diffForHumans() }}</span>
                                         @endif
                                     </p>

@@ -9,3 +9,27 @@ nav ul.pagination{
     gap: 2rem;
     justify-content: flex-end;
 }
+.urgent{
+    background-color:rgb(231, 0, 0);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+}
+.high{
+    background-color:rgba(252, 4, 4, 0.671);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+}
+.medium{
+    background-color:#dfaa00;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+}
+.low{
+    background-color:rgb(66, 119, 42);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+}
