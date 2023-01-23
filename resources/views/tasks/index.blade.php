@@ -11,6 +11,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     @vite('resources/css/app.css')
     <script src="/js/customscript.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
 </head>
 
 <body class="relative bg-gray-100 h-auto">
@@ -34,9 +35,9 @@
             <h1 class="text-3xl font-bold">Tasks</h1>
             <x-search></x-search>
         </div>
-        <x-newtask :priorities=$priorities></x-newtask>
+        <x-newtask :priorities=$priorities :tags=$tags></x-newtask>
     </div>
-    
+
     <div class="ml-72 w-10/12 px-4 lg:ml-0 lg:w-full">
         <div class="py-8">
             <div class="-mx-4 sm:-mx-8 px-4 py-4 overflow-x-auto">
@@ -72,17 +73,25 @@
                                             @elseif ($task->priority == 'Urgent')
                                             urgent
                                         @endif">
-                                        {{$task->priority}}
-                                    </span>
+                                            {{$task->priority}}
+                                        </span>
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm">
+                                    <p class="whitespace-no-wrap text-sm focus:outline-none leading-none  text-center">
+                                        <span class="text-red-400 bg-red-50 p-2 border-2  rounded border-red-300">
+                                            {{-- {{ $task->tag->name}}                                         --}}
+                                            @foreach ($task->tags as $tag)
+                                            {{ $tag->name }}
+                                            @endforeach
+                                        </span>
+                                    </p>                                
+                                <td class="px-5 py-5 bg-white text-sm">
                                     @if($task->due_date != null)
-                                    <p
-                                        class="whitespace-no-wrap text-sm focus:outline-none leading-none  text-center">
+                                    <p class="whitespace-no-wrap text-sm focus:outline-none leading-none  text-center">
                                         @if ($task->due_date)
                                         <span class="text-red-400 bg-red-50 p-2 border-2  rounded border-red-300">
-                                            {{ $task->due_date?->diffForHumans() }}</span>
+                                            {{ $task->due_date?->format('d/m/Y') }}</span>
                                         @endif
                                     </p>
                                     @endif
@@ -133,6 +142,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </body>
 
 </html>

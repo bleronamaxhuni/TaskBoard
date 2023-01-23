@@ -25,4 +25,9 @@ class Task extends Model
             'low' => self::Low,
         ];
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tags::class,'tasks_tags','task_id','tag_id');
+    }
 }
