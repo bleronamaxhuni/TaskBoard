@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TagsController;
 use App\Http\Controllers\TaskController;
 use App\Models\Task;
 use Illuminate\Support\Facades\Route;
@@ -18,9 +19,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('dashboard.home');
 });
+// Tasks
 Route::get('tasks', [TaskController::class, 'index'])->name('tasks.index');
 Route::post('tasks/create', [TaskController::class, 'store'])->name('tasks.store');
 Route::get('tasks/{task}/edit',[TaskController::class,'edit'])->name('tasks.edit');
 Route::patch('tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
-Route::delete('tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.update');
+Route::delete('tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 Route::patch('tasks/{task}/completed', [TaskController::class, 'completed'])->name('tasks.completed');
+
+// Tags
+Route::get('tags', [TagsController::class, 'index'])->name('tags.index');
+Route::post('tags/create', [TagsController::class, 'store'])->name('tags.store');
+Route::delete('tags/{tag}', [TagsController::class, 'destroy'])->name('tags.destroy');
+

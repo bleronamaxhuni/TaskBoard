@@ -17,6 +17,13 @@
                                 <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-lg ">Tasks</span>
                             </a>
                         </li>
+                        <li class="flex w-full">
+                            <a href="{!! url('/tags') !!}"
+                                class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-6 rounded  hover:bg-gray-200 w-full">
+                                <i class="fa-solid fa-tag flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900"></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-lg ">Tags</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -47,6 +54,13 @@
                                 <i
                                     class="fa-solid fa-list-check flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900 "></i>
                                 <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-lg ">Tasks</span>
+                            </a>
+                        </li>
+                        <li class="flex w-full">
+                            <a href="{!! url('/tags') !!}"
+                                class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-6 rounded hover:bg-gray-200 w-full">
+                                <i class="fa-solid fa-tag flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900 "></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-lg ">tags</span>
                             </a>
                         </li>
                     </ul>

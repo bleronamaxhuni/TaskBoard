@@ -9,6 +9,27 @@ nav ul.pagination{
     gap: 2rem;
     justify-content: flex-end;
 }
+li.page-item{
+    border: 1px solid transparent;
+    padding: 5px 15px 5px 15px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0px 0px 7px 3px rgb(0 0 0 / 5%), 0px 20px 10px rgb(0 0 0 / 5%), 12px 11px 20px rgb(0 0 0 / 5%);
+}
+li a.page-link, .page-item.disabled , .page-item.active{
+    color: black;
+    font-weight: bold;
+}
+.page-item:hover, 
+.page-item.disabled:hover, 
+.page-item.active:hover{
+    padding: 6px 16px 6px 16px;
+    background-color: rgb(219, 219, 219);
+}
+.page-item.active{
+    background-color: #021a418a;
+    color: white;
+}
 .urgent{
     background-color:rgb(231, 0, 0);
     border: 1px solid transparent;

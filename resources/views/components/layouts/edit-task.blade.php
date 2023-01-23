@@ -38,13 +38,14 @@
             <td class="px-5 py-5 bg-white text-sm">
                 <select id="priority" name="priority"
                 class="w-full bg-gray-200 p-2 mt-2 mb-3 rounded-sm">
+                <option class="hidden" value="" disabled selected>{{old('priority', $task['priority'])}}
                 @foreach ($priorities as $priority)
-                    <option value="{{$priority}}" >{{ $priority }}</option>
+                    <option value="{{old('priority', $task['priority'])}}" >{{ $priority }}</option>
                 @endforeach
             </select>
             </td>
             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                <input type="date" name="due_date" id="due_date" value="{{ old('due_date', $task['due_date'])->format('Y-m-d')}}">
+                <input type="date" name="due_date" id="due_date" value="{{ old('due_date', $task['due_date']->format('Y-m-d'))}}">
             </td>
             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
                 <button type="submit" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700">Update

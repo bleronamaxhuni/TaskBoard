@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tags;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Symfony\Contracts\Service\Attribute\Required;
 use Carbon\Carbon;
-
+use Illuminate\Validation\Rule;
 class TaskController extends Controller
 {
     public function index(Request $request)
@@ -15,25 +16,35 @@ class TaskController extends Controller
             $tasks = Task::where('task_title','like','%'.request('search').'%')->orWhere('task_description','like','%'.request('search').'%')
             ->get();
         }else{
-            $tasks = Task::paginate(5);
+            $tasks = Task::with(['tags'])->paginate(5);
         }
         return view('tasks.index', [
             'tasks' => $tasks,
             'priorities' => Task::Priorities(),
+            'tags' => Tags::all(),
         ]);
     }
 
+    public function create(){
+        $tags = Tags::get();
+        return view('tasks.index', [
+            'tags' => $tags,
+        ]);
+    }
     public function store(Request $request)
     {
         $tasks = $request->validate([
             'task_title' => 'required|max:200',
             'task_description' => 'required|max:100000',
-            'due_date'=>'after:now|nullable',
+            'due_date'=>'date|after_or_equal:created_at|nullable',
             'priority'=>'nullable',
         ]);
-        Task::create($tasks);
+        $tasks=Task::create($tasks);
+        if ($request->has('tags')) {
+            $tasks->tags()->attach($request->tags);
+        }
         return back()->with("message","Task has been created");
-
+    
     }
     public function edit(Task $task)
     {
@@ -49,9 +60,9 @@ class TaskController extends Controller
         $tasks = $request->validate([
             'task_title' => 'required|max:200',
             'task_description' => 'required|max:100000',
-            'due_date'=>'after:now|nullable',
+            'due_date'=>'date|after_or_equal:created_at|nullable',
             'priority'=>'nullable',
-
+            
         ]);
         $task->update($tasks);
         return back()->with("message","Task has been updated");
@@ -67,7 +78,7 @@ class TaskController extends Controller
             return back()->with("message", "Task has been uncompleted");
         }
     }
-    
+
     public function destroy(Task $task)
     {
         $task->delete();
