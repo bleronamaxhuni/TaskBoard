@@ -19,24 +19,23 @@ class TagsController extends Controller
             'name' => 'required|max:200',
         ]);
         Tags::create($tags);
-        // Tags::create(['name' => $request->name]);
         return back()->with("message","Tag has been created");
     }
 
-    public function show($id)
+    public function edit(Tags $tag)
     {
-        //
+        return view('tags.edit', ['tag' => $tag,]);
     }
 
-    public function edit($id)
+    public function update(Request $request, Tags $tag)
     {
-        //
+        $tags = $request->validate([
+            'name' => 'required|max:200',
+        ]);
+        $tag->update($tags);
+        return back()->with("message","Tag has been updated");
     }
 
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     public function destroy(Tags $tag)
     {

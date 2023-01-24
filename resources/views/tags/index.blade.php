@@ -32,15 +32,18 @@
     <div class="ml-72 w-10/12 px-4 lg:ml-0 lg:w-full">
         <div class="py-8">
             <div class="flex justify-center w-full mb-10">
-                <form action="/tags/create" method="POST" class="w-8/12 flex border-2 border-transparent rounded-lg text-gray-600 font-medium focus:ring focus:ring-blue-50 bg-white shadow-sm" >
+                <form action="/tags/create" method="POST"
+                    class="w-8/12 flex border-2 border-transparent rounded-lg text-gray-600 font-medium focus:ring focus:ring-blue-50 bg-white shadow-sm">
                     @csrf
-                    <input type="text" name="name" value="{{old('name')}}" id="name" placeholder="New Tag" class="w-10/12 relative flex-auto block  px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding  focus:border-blue-600 focus:outline-none " required>
+                    <input type="text" name="name" value="{{old('name')}}" id="name" placeholder="New Tag"
+                        class="w-10/12 relative flex-auto block  px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding  focus:border-blue-600 focus:outline-none "
+                        required>
                     <button type="submit"
-                    class="btn inline-block px-4 py-2  bg-blue-500 text-white rounded-lg focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
-                    type="button">Create</button> 
+                        class="btn inline-block px-4 py-2  bg-blue-500 text-white rounded-lg focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+                        type="button">Create</button>
                 </form>
             </div>
-            <table  class="min-w-full leading-normal bg-white">
+            <table class="min-w-full leading-normal bg-white">
                 <thead>
                     <tr>
                         <th
@@ -65,14 +68,20 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="px-5 py-5 bg-white text-sm text-center">
+                        <td class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2 h-full">
+                            <button
+                                class="rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"><a
+                                    href="/tags/{{ $tag['id'] }}/edit"><i class="fa-solid fa-pen-to-square"></i> <span
+                                        class="md:hidden">Edit</span></a>
+                            </button>
+
                             <form action="/tags/{{ $tag['id'] }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button
                                     class="rounded-lg px-4 py-2 bg-red-600 text-red-100 hover:bg-red-700 duration-300"><i
-                                        class="fa-solid fa-trash"></i> <input type="submit" name=""
-                                        value="Delete" class="md:hidden">
+                                        class="fa-solid fa-trash"></i> <input type="submit" name="" value="Delete"
+                                        class="md:hidden">
                                 </button>
                             </form>
                         </td>
@@ -83,4 +92,5 @@
         </div>
     </div>
 </body>
+
 </html>

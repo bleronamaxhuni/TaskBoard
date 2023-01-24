@@ -30,5 +30,7 @@ Route::patch('tasks/{task}/completed', [TaskController::class, 'completed'])->na
 // Tags
 Route::get('tags', [TagsController::class, 'index'])->name('tags.index');
 Route::post('tags/create', [TagsController::class, 'store'])->name('tags.store');
+Route::get('tags/{tag}/edit', [TagsController::class, 'edit'])->name('tags.edit');
+Route::patch('tags/{tag}', [TagsController::class, 'update'])->name('tags.update');
 Route::delete('tags/{tag}', [TagsController::class, 'destroy'])->name('tags.destroy');
 
