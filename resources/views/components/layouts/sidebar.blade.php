@@ -14,15 +14,32 @@
                                 class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-1 rounded  hover:bg-gray-200 w-full">
                             <i
                                     class="fa-solid fa-list-check flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900 "></i>
-                                <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-lg ">Tasks</span>
+                                <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-base ">Tasks</span>
                             </a>
                         </li>
                         <li class="flex w-full">
                             <a href="{!! url('/tags') !!}"
                                 class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-1 rounded  hover:bg-gray-200 w-full">
                                 <i class="fa-solid fa-tag flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900"></i>
-                                <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-lg ">Tags</span>
+                                <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-base ">Tags</span>
                             </a>
+                        </li>
+                        <li class="flex w-full">
+                            <a href="{!! url('/profile') !!}"
+                                class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-1 rounded  hover:bg-gray-200 w-full">
+                                <i class="fa-solid fa-gear flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900 "></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-base ">Settings</span>
+                            </a>
+                        </li>
+                        <li class="flex w-full">
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-1 rounded  hover:bg-gray-200 w-full">
+                                <i class="fa-solid fa-right-from-bracket flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900 "></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-base ">Log out</span>
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </li>
                     </ul>
                 </div>
