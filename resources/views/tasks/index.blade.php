@@ -11,7 +11,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     @vite('resources/css/app.css')
     <script src="/js/customscript.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+    <script type="module" src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine-ie11.min.js" defer></script>
 </head>
 
 <body class="relative bg-gray-100 h-auto">
@@ -79,10 +80,9 @@
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm">
                                     <p class="whitespace-no-wrap text-sm focus:outline-none leading-none  text-center">
-                                        <span class="text-red-400 bg-red-50 p-2 border-2  rounded border-red-300">
-                                            {{-- {{ $task->tag->name}}                                         --}}
+                                        <span >
                                             @foreach ($task->tags as $tag)
-                                            {{ $tag->name }}
+                                            <span class="text-black bg-blue-50 p-2 border-2 border-blue-200  rounded">{{ $tag->name }}</span>
                                             @endforeach
                                         </span>
                                     </p>                                
@@ -143,6 +143,54 @@
             </div>
         </div>
     </div>
+    <script>
+        function dropdown() {
+            return {
+                options: [],
+                selected: [],
+                show: false,
+                open() { this.show = true },
+                close() { this.show = false },
+                isOpen() { return this.show === true },
+                select(index, event) {
+
+                    if (!this.options[index].selected) {
+
+                        this.options[index].selected = true;
+                        this.options[index].element = event.target;
+                        this.selected.push(index);
+
+                    } else {
+                        this.selected.splice(this.selected.lastIndexOf(index), 1);
+                        this.options[index].selected = false
+                    }
+                },
+                remove(index, option) {
+                    this.options[option].selected = false;
+                    this.selected.splice(index, 1);
+
+
+                },
+                loadOptions() {
+                    const options = document.getElementById('select').options;
+                    for (let i = 0; i < options.length; i++) {
+                        this.options.push({
+                            value: options[i].value,
+                            text: options[i].innerText,
+                            selected: options[i].getAttribute('selected') != null ? options[i].getAttribute('selected') : false
+                        });
+                    }
+
+
+                },
+                selectedValues(){
+                    return this.selected.map((option)=>{
+                        return this.options[option].value;
+                    })
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
-    protected $fillable = ['task_title', 'task_description','completed_at','due_date','priority'];
-    protected $dates = ['due_date','completed_at'];
+    protected $fillable = ['task_title', 'task_description', 'completed_at', 'due_date', 'priority'];
+    protected $dates = ['due_date', 'completed_at'];
 
     const Urgent = 'Urgent';
     const High = 'High';
@@ -18,7 +18,7 @@ class Task extends Model
 
     public static function Priorities()
     {
-        return $priorities = [
+        return  [
             'urgent' => self::Urgent,
             'high' => self::High,
             'medium' => self::Medium,
@@ -28,6 +28,6 @@ class Task extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tags::class,'tasks_tags','task_id','tag_id');
+        return $this->belongsToMany(Tags::class, 'tasks_tags', 'task_id', 'tag_id');
     }
 }
