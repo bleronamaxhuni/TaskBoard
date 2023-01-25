@@ -1,3 +1,4 @@
+<x-layouts.sidebar></x-layouts.sidebar>
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
