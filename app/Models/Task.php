@@ -31,7 +31,7 @@ class Task extends Model
         return $this->belongsToMany(Tags::class, 'tasks_tags', 'task_id', 'tag_id');
     }
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
