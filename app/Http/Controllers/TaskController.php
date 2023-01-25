@@ -17,7 +17,7 @@ class TaskController extends Controller
             $tasks = Task::where('task_title', 'like', '%' . request('search') . '%')->orWhere('task_description', 'like', '%' . request('search') . '%')
                 ->get();
         } else {
-            $tasks = Task::with(['tags'])->paginate(5);
+            $tasks = Task::with(['tags','users'])->paginate(5);
         }
         return view('tasks.index', [
             'tasks' => $tasks,

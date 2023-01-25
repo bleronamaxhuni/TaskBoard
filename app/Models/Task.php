@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
-    protected $fillable = ['task_title', 'task_description', 'completed_at', 'due_date', 'priority'];
+    protected $fillable = ['user_id','task_title', 'task_description', 'completed_at', 'due_date', 'priority'];
     protected $dates = ['due_date', 'completed_at'];
 
     const Urgent = 'Urgent';
@@ -29,5 +29,10 @@ class Task extends Model
     public function tags()
     {
         return $this->belongsToMany(Tags::class, 'tasks_tags', 'task_id', 'tag_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class);
     }
 }
