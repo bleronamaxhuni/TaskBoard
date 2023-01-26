@@ -45,14 +45,6 @@
                             </li>
                         </ul>
                     </div>
-                    {{-- <li class="flex w-full">
-                        <a href=""
-                            class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-1 rounded  hover:bg-gray-200 w-full">
-
-                            <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-base ">{{
-                                Auth::user()->name}}</span>
-                        </a>
-                    </li> --}}
                     <li class="flex w-full">
                         <a href="{!! url('/tasks') !!}"
                             class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-1 rounded  hover:bg-gray-200 w-full">
@@ -70,7 +62,7 @@
                         </a>
                     </li>
                 </ul>
-            </div>
+            </div>            
         </div>
 
         <div class="w-64 z-40 absolute  shadow h-full flex-col justify-between hidden lg:flex transition duration-150 ease-in-out bg-gray-50"

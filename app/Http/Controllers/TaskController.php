@@ -20,11 +20,14 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
+        $currentuser = Auth::user();
         if (request('search')) {
-            $tasks = Task::where('task_title', 'like', '%' . request('search') . '%')->orWhere('task_description', 'like', '%' . request('search') . '%')
-                ->get();
+            $searchTerm = request('search');
+            $tasks = Task::where(function($query) use ($searchTerm) {
+                $query->where('task_title', 'like', "%{$searchTerm}%")
+                    ->orWhere('task_description', 'like', "%{$searchTerm}%");
+            })->where('user_id', $currentuser->id)->paginate(5);
         } else {
-            $currentuser = Auth::user();
             $tasks = Task::where('user_id','=',$currentuser->id)->with(['tags','user'])->paginate(5);
         }
         return view('tasks.index', [
