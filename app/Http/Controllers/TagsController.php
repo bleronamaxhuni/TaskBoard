@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Tags;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TagsController extends Controller
 {
     public function index()
     {
-        $tags = Tags::all();
+        $currentuser = Auth::user();
+        $tags = Tags::where('user_id','=',$currentuser->id)->get();
         return view('tags.index', ['tags' => $tags]);
     }
 
