@@ -137,6 +137,13 @@
                     <div class="flex flex-row w-full justify-center bg-white p-3">
                         {{ $tasks->links() }}
                     </div>
+
+                    <form action="{{ route('invitations.store') }}" method="post">
+                        @csrf
+                        <input type="email" name="email" placeholder="Invitee's email">
+                        <input type="hidden" name="task_id" value="{{ $task->id }}">
+                        <button type="submit">Invite</button>
+                    </form>
                 </div>
             </div>
         </div>
