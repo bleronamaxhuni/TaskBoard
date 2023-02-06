@@ -1,127 +1,147 @@
-<div class="w-64 fixed inset-y-0 left-0" aria-label="Sidebar">
-    <div class="flex flex-no-wrap">
-        <div class="w-64 absolute sm:relative bg-gray-50 shadow h-full flex-col justify-between flex lg:hidden">
-            <div class="px-3 py-4">
-                <div class="h-16 w-full flex items-center">
-                    <a href="/" class="flex items-center pl-2.5 mb-5">
-                        <img src="{{ asset('/images/badge.png') }}" class="h-6 mr-3 sm:h-7" />
-                        <span class="self-center text-xl font-semibold whitespace-nowrap ">TaskBoard</span>
-                    </a>
-                </div>
-                <ul class="space-y-2">
-                    <div x-data="{ open: false }" class="relative">
-                        <button x-on:click="open = true"
-                            class="flex items-center justify-between p-1 text-base font-normal text-gray-900 cursor-pointer mb-1 rounded  hover:bg-gray-200 w-full"
-                            type="button">
-                            <span class="mr-1 whitespace-nowrap font-semibold text-base ">{{Auth::user()->name}}</span>
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                style="margin-top:3px">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                            </svg>
-                        </button>
-                        <ul x-show="open" x-on:click.away="open = false"
-                            class="bg-gray-50 text-gray-700 rounded shadow-lg relative py-2 mt-1 w-full p-3">
-                            <li class="flex w-full">
-                                <a href="{!! url('/profile') !!}"
-                                    class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-1 rounded  hover:bg-gray-200 w-full">
-                                    <i
-                                        class="fa-solid fa-gear flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900 "></i>
-                                    <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-sm">Settings</span>
-                                </a>
-                            </li>
-                            <li class="flex w-full">
-                                <form method="post" action="{{ route('logout') }}" class="w-full flex justify-start">
-                                    @csrf
-                                    <button type="submit"
-                                        class="p-1 text-base font-normal text-gray-900 cursor-pointer mb-1 rounded  hover:bg-gray-200 w-full"
-                                        role="menuitem" tabindex="-1">
-                                        <div class="w-5/12">
-                                            <i
-                                                class="fa-solid fa-right-from-bracket flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900 "></i>
-                                            <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-sm">Log out</span>
-                                        </div>
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                    <li class="flex w-full">
-                        <a href="{!! url('/tasks') !!}"
-                            class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-1 rounded  hover:bg-gray-200 w-full">
-                            <i
-                                class="fa-solid fa-list-check flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900 "></i>
-                            <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-base ">Tasks</span>
-                        </a>
-                    </li>
-                    <li class="flex w-full">
-                        <a href="{!! url('/tags') !!}"
-                            class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-1 rounded  hover:bg-gray-200 w-full">
-                            <i
-                                class="fa-solid fa-tag flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900"></i>
-                            <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-base ">Tags</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>            
-        </div>
+<div class="2xl:hidden lg:block">
+    <div @click="sidemenu = false"
+        class="fixed inset-0 z-30 bg-gray-600 opacity-0 pointer-events-none transition-opacity ease-linear duration-300"
+        :class="{'opacity-75 pointer-events-auto': sidemenu, 'opacity-0 pointer-events-none': !sidemenu}">
+    </div>
 
-        <div class="w-64 z-40 absolute  shadow h-full flex-col justify-between hidden lg:flex transition duration-150 ease-in-out bg-gray-50"
-            id="mobile-nav">
-            <button aria-label="toggle sidebar" id="openSideBar"
-                class="bg-gray-50 absolute right-0  -mr-14 p-5 flex items-center shadow  justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-gray-800"
-                onclick="sidebarHandler(true)">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <button aria-label="Close sidebar" id="closeSideBar"
-                class="bg-transparent absolute right-0 p-5 flex items-center justify-center cursor-pointer text-white"
-                onclick="sidebarHandler(false)">
-                <i class="fa-solid fa-xmark text-black text-xl mt-1"></i>
-            </button>
-            <div class="px-3 py-4">
-                <div class="h-16 w-full flex items-center">
-                    <a href="/" class="flex items-center pl-2.5 mb-5">
-                        <img src="{{ asset('/images/badge.png') }}" class="h-6 mr-3 sm:h-7" />
-                        <span class="self-center text-xl font-semibold whitespace-nowrap ">TaskBoard</span>
-                    </a>
-                </div>
-                <ul class="space-y-2">
-                    <li class="flex w-full">
-                        <a href="{!! url('/tasks') !!}"
-                            class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-6 rounded hover:bg-gray-200 w-full">
-                            <i
-                                class="fa-solid fa-list-check flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900 "></i>
-                            <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-lg ">Tasks</span>
-                        </a>
-                    </li>
-                    <li class="flex w-full">
-                        <a href="{!! url('/tags') !!}"
-                            class="flex items-center p-1 text-base font-normal text-gray-900 cursor-pointer mb-6 rounded hover:bg-gray-200 w-full">
-                            <i
-                                class="fa-solid fa-tag flex-shrink-0 text-gray-500 transition duration-75  group-hover:text-gray-900 "></i>
-                            <span class="flex-1 ml-3 whitespace-nowrap font-semibold text-lg ">tags</span>
-                        </a>
-                    </li>
-                </ul>
+    <!-- Small Screen Menu -->
+    <div class="fixed inset-y-0 left-0 flex flex-col z-40 max-w-xs w-full bg-white transform ease-in-out duration-300 -translate-x-full"
+        :class="{'translate-x-0': sidemenu, '-translate-x-full': !sidemenu}">
+
+        <!-- Brand Logo / Name -->
+        <div class="flex items-center px-6 py-3 h-16">
+            <div class="text-2xl font-bold tracking-tight text-gray-800">
+                <a href="/" class="flex items-center pt-4 mb-5">
+                    <img src="{{ asset('/images/badge.png') }}" class="h-6 mr-3 sm:h-7" />
+                    <span class="self-center font-semibold whitespace-nowrap ">TaskBoard</span>
+                </a>
             </div>
         </div>
+        <!-- @end Brand Logo / Name -->
+
+        <div class="px-4 py-2 flex-1 h-0 overflow-y-auto">
+            {{-- small sc navbar --}}
+            <ul>
+                <li>
+                    <a href="{!! url('/') !!}"
+                        class="mb-1 px-2 py-2 rounded-lg flex items-center font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="mr-4 opacity-50" width="24" height="24"
+                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
+                            <rect x="4" y="4" width="6" height="6" rx="1" />
+                            <rect x="14" y="4" width="6" height="6" rx="1" />
+                            <rect x="4" y="14" width="6" height="6" rx="1" />
+                            <rect x="14" y="14" width="6" height="6" rx="1" />
+                        </svg>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{!! url('/tasks') !!}"
+                        class="mb-1 px-2 py-2 rounded-lg flex items-center font-medium text-gray-700  hover:text-blue-600 hover:bg-gray-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="mr-4 opacity-50" width="24" height="24"
+                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
+                            <circle cx="12" cy="12" r="9" />
+                            <polyline points="12 7 12 12 9 15" />
+                        </svg>
+                        Tasks
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{!! url('/tags') !!}"
+                        class="mb-1 px-2 py-2 rounded-lg flex items-center font-medium text-gray-700  hover:text-blue-600 hover:bg-gray-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="mr-4 opacity-50" width="24" height="24"
+                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
+                            <path
+                                d="M16 6h3a 1 1 0 011 1v11a2 2 0 0 1 -4 0v-13a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v12a3 3 0 0 0 3 3h11" />
+                            <line x1="8" y1="8" x2="12" y2="8" />
+                            <line x1="8" y1="12" x2="12" y2="12" />
+                            <line x1="8" y1="16" x2="12" y2="16" />
+                        </svg>
+                        Tags
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
     </div>
-    <script>
-        var sideBar = document.getElementById("mobile-nav");
-            var openSidebar = document.getElementById("openSideBar");
-            var closeSidebar = document.getElementById("closeSideBar");
-            sideBar.style.transform = "translateX(-260px)";
-
-            function sidebarHandler(flag) {
-                if (flag) {
-                    sideBar.style.transform = "translateX(0px)";
-                    openSidebar.classList.add("hidden");
-                    closeSidebar.classList.remove("hidden");
-                } else {
-                    sideBar.style.transform = "translateX(-260px)";
-                    closeSidebar.classList.add("hidden");
-                    openSidebar.classList.remove("hidden");
-                }
-            }
-    </script>
-
+    <!-- @end Small Screen Menu -->
 </div>
+
+
+<!-- Menu Above Medium Screen -->
+<div class="bg-white w-64 min-h-screen overflow-y-auto hidden 2xl:block lg:hidden shadow relative z-30">
+
+    <!-- Brand Logo / Name -->
+    <div class="flex items-center px-6 py-3 h-16">
+        <div class="text-2xl font-bold tracking-tight text-gray-800">
+            <a href="/" class="flex items-center pt-4 mb-5">
+                <img src="{{ asset('/images/badge.png') }}" class="h-6 mr-3 sm:h-7" />
+                <span class="self-center font-semibold whitespace-nowrap ">TaskBoard</span>
+            </a>
+        </div>
+    </div>
+    <!-- @end Brand Logo / Name -->
+
+    <div class="px-4 py-2">
+        {{-- bigger sc nav --}}
+        <ul>
+            <li>
+                <a href="{!! url('/') !!}"
+                    class="mb-1 px-2 py-2 rounded-lg flex items-center font-medium text-gray-700  hover:text-blue-600 hover:bg-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mr-4 opacity-50" width="24" height="24"
+                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
+                        <rect x="4" y="4" width="6" height="6" rx="1" />
+                        <rect x="14" y="4" width="6" height="6" rx="1" />
+                        <rect x="4" y="14" width="6" height="6" rx="1" />
+                        <rect x="14" y="14" width="6" height="6" rx="1" />
+                    </svg>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="{!! url('/tasks') !!}"
+                    class="mb-1 px-2 py-2 rounded-lg flex items-center font-medium text-gray-700  hover:text-blue-600 hover:bg-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mr-4 opacity-50" width="24" height="24"
+                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
+                        <circle cx="12" cy="12" r="9" />
+                        <polyline points="12 7 12 12 9 15" />
+                    </svg>
+                    Tasks
+                </a>
+            </li>
+
+            <li>
+                <a href="{!! url('/tags') !!}"
+                    class="mb-1 px-2 py-2 rounded-lg flex items-center font-medium text-gray-700  hover:text-blue-600 hover:bg-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mr-4 opacity-50" width="24" height="24"
+                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
+                        <path
+                            d="M16 6h3a 1 1 0 011 1v11a2 2 0 0 1 -4 0v-13a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v12a3 3 0 0 0 3 3h11" />
+                        <line x1="8" y1="8" x2="12" y2="8" />
+                        <line x1="8" y1="12" x2="12" y2="12" />
+                        <line x1="8" y1="16" x2="12" y2="16" />
+                    </svg>
+                    Tags
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<!-- @end Menu Above Medium Screen -->

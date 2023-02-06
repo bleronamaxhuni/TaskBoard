@@ -16,9 +16,6 @@
 </head>
 
 <body class="relative bg-gray-100 h-auto">
-    <x-layouts.sidebar></x-layouts.sidebar>
-
-
     <div class="text-center">
         @if (Session::has('message'))
         {{Session::get('message')}}
@@ -31,18 +28,19 @@
         @endif
     </div>
 
-    <div class="ml-72 p-4  lg:ml-0 lg:mt-12 lg:w-full">
-        <div class="flex w-full justify-between py-9">
-            <h1 class="text-3xl font-bold">Tasks</h1>
-            <x-search></x-search>
-        </div>
-        <x-newtask :priorities=$priorities :tags=$tags></x-newtask>
-    </div>
-
-    <div class="ml-72 w-10/12 px-4 lg:ml-0 lg:w-full">
-        <div class="py-8">
-            <div class="-mx-4 sm:-mx-8 px-4 py-4 overflow-x-auto">
-                <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+    <div x-data="{ sidemenu: false }" class="h-screen flex overflow-hidden" x-cloak
+        @keydown.window.escape="sidemenu = false">
+        <x-layouts.sidebar></x-layouts.sidebar>
+        <div class="flex-1 flex-col relative z-0 overflow-y-auto">
+            <x-layouts.topbar></x-layouts.topbar>
+            <div class="md:max-w-6xl md:mx-auto px-4 py-8">
+                <div class="py-4 lg:mt-12 lg:w-full">
+                    <div class="flex w-full justify-between py-9">
+                        <h1 class="text-3xl font-bold">Tasks</h1>
+                    </div>
+                    <x-newtask :priorities=$priorities :tags=$tags></x-newtask>
+                </div>
+                <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden mt-10">
                     <table class="min-w-full leading-normal bg-white">
                         <x-layouts.tabletitles></x-layouts.tabletitles>
                         <tbody>
