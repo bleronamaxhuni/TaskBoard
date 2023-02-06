@@ -26,8 +26,8 @@
 
         <div class="relative" x-data="{ open: false }" x-cloak>
             <div @click="open = !open"
-                class="cursor-pointer font-bold w-10 h-10 bg-blue-200 text-blue-600 flex items-center justify-center rounded-full">
-                DA
+                class="cursor-pointer font-bold w-48 h-10 bg-blue-200 text-blue-600 flex items-center justify-center rounded-full">
+                {{ Auth::user()->name}}
             </div>
 
             <div x-show.transition="open" @click.away="open = false"

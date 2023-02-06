@@ -10,8 +10,7 @@ class TagsController extends Controller
 {
     public function index()
     {
-        $currentuser = Auth::user();
-        $tags = Tags::where('user_id','=',$currentuser->id)->get();
+        $tags = Tags::get();
         return view('tags.index', ['tags' => $tags]);
     }
 
@@ -20,8 +19,6 @@ class TagsController extends Controller
         $tag = $request->validate([
             'name' => 'required|max:200',
         ]);
-        $user_id = Auth::user()->id;
-        $tag['user_id'] = $user_id;
         $tags = Tags::create($tag);
 
         return back()->with("message","Tag has been created");

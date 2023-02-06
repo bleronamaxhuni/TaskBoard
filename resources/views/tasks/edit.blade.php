@@ -31,7 +31,7 @@
         <div class="flex-1 flex-col relative z-0 overflow-y-auto">
             <x-layouts.topbar></x-layouts.topbar>
             <div class="md:max-w-6xl md:mx-auto px-4 py-8">
-                <div class="p-4 lg:mt-12 lg:w-full">
+                <div class="py-4 lg:mt-12 lg:w-full">
                     <div class="flex w-full justify-between py-9">
                         <h1 class="text-3xl font-bold">Edit Task</h1>
                     </div>
