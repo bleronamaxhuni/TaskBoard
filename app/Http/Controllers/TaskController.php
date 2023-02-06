@@ -4,20 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\Tags;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Symfony\Contracts\Service\Attribute\Required;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $request)
     {
+        $currentuser = Auth::user();
         if (request('search')) {
-            $tasks = Task::where('task_title', 'like', '%' . request('search') . '%')->orWhere('task_description', 'like', '%' . request('search') . '%')
-                ->get();
+            $searchTerm = request('search');
+            $tasks = Task::where(function($query) use ($searchTerm) {
+                $query->where('task_title', 'like', "%{$searchTerm}%")
+                    ->orWhere('task_description', 'like', "%{$searchTerm}%");
+            })->where('user_id', $currentuser->id)->paginate(5);
         } else {
-            $tasks = Task::with(['tags'])->paginate(5);
+            $tasks = Task::where('user_id','=',$currentuser->id)->with(['tags','user'])->paginate(5);
         }
         return view('tasks.index', [
             'tasks' => $tasks,
@@ -40,8 +51,10 @@ class TaskController extends Controller
             'task_description' => 'required|max:100000',
             'due_date' => 'date|after_or_equal:created_at|nullable',
             'priority' => 'nullable',
-            'tags' => 'nullable'
+            'tags' => 'nullable',
         ]);
+        $user_id = Auth::user()->id;
+        $task['user_id'] = $user_id;
         $tasks = Task::create($task);
 
         if ($request->has('tags')) {

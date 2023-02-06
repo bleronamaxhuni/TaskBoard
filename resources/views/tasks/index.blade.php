@@ -124,7 +124,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button
-                                            class="rounded-lg px-4 py-2 bg-red-600 text-red-100 hover:bg-red-700 duration-300"><i
+                                            class="rounded-lg px-4 py-2 bg-red-600 text-red-100 hover:bg-red-700 duration-300" onclick="deleteFunction();"> <i
                                                 class="fa-solid fa-trash"></i> <input type="submit" name=""
                                                 value="Delete" class="md:hidden">
                                         </button>

@@ -11,7 +11,16 @@
     @vite('resources/css/app.css')
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
 </head>
-<body>
+<body class="relative bg-gray-100 h-auto">
     <x-layouts.sidebar></x-layouts.sidebar>
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900 text-center">
+                        {{ __(Auth::user()->name .", you're logged in!") }}
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 </html>
