@@ -98,9 +98,6 @@ class TaskController extends Controller
     // }
     public function toggleFavorite(Request $request, Task $task)
     {
-        if ($task->completed_at == NULL) {
-            $task->update(['completed_at' => now()]);
-            return back()->with("message", "Task has been completed");
         if ($task->favorite == 0) {
             $task->update(['favorite' => 1]);
             return back()->with("message", "Task has been favorited");
