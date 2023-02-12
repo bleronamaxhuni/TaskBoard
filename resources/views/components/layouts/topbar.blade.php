@@ -1,4 +1,4 @@
-<div class="px-4 md:px-8 py-2 h-16 flex justify-between items-center shadow-sm bg-white">
+<div class="px-4 md:px-8 py-1 h-14 flex justify-between items-center shadow-sm bg-white">
     <div class="flex items-center w-2/3">
         <div class="p-2 rounded-full hover:bg-gray-200 cursor-pointer 2xl:hidden lg:block"
             @click="sidemenu = !sidemenu">
@@ -10,9 +10,6 @@
                 <line x1="4" y1="18" x2="20" y2="18" />
             </svg>
         </div>
-        <input
-            class="bg-gray-200 focus:outline-none focus:shadow-outline focus:bg-white border border-transparent focus:border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal placeholder-gray-700 mr-10"
-            type="text" placeholder="Search...">
     </div>
     <div class="flex items-center">
         <a href="#" class="text-gray-500 p-2 rounded-full hover:text-blue-600 hover:bg-gray-200 cursor-pointer mr-4">
