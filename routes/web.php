@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\TaskController;
@@ -41,6 +42,13 @@ Route::middleware('auth')->group(function () {
     Route::get('tags/{tag}/edit', [TagsController::class, 'edit'])->name('tags.edit');
     Route::patch('tags/{tag}', [TagsController::class, 'update'])->name('tags.update');
     Route::delete('tags/{tag}', [TagsController::class, 'destroy'])->name('tags.destroy');
+
+    // Projects
+    Route::get('projects', [ProjectsController::class,'index'])->name('projects.index');
+    Route::post('projects/create', [ProjectsController::class, 'store'])->name('projects.store');
+    // Route::post('projects/{project}/edit', [ProjectsController::class, 'edit'])->name('projects.edit');
+    Route::delete('projects/{project}', [ProjectsController::class, 'destroy'])->name('projects.destroy');
+
 });
 
 require __DIR__.'/auth.php';

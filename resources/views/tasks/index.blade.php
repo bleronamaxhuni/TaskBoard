@@ -37,6 +37,7 @@
                 <div class="py-4 lg:mt-12 lg:w-full">
                     <div class="flex w-full justify-between py-9">
                         <h1 class="text-3xl font-bold">Tasks</h1>
+                        <x-search></x-search>
                     </div>
                     <x-newtask :priorities=$priorities :tags=$tags></x-newtask>
                 </div>
@@ -165,12 +166,6 @@
                         {{ $tasks->links() }}
                     </div>
 
-                    <form action="{{ route('invitations.store') }}" method="post">
-                        @csrf
-                        <input type="email" name="email" placeholder="Invitee's email">
-                        <input type="hidden" name="task_id" value="{{ $task->id }}">
-                        <button type="submit">Invite</button>
-                    </form>
                 </div>
             </div>
         </div>
