@@ -57,3 +57,46 @@ li a.page-link, .page-item.disabled , .page-item.active{
 [x-cloak] {
     display: none;
 }
+.toggle-favorite-button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}  
+.fa-star {
+    font-size: 20px;
+}  
+.fa-star:hover{
+    color: #f7cc3e;
+}  
+.favorite{
+    color: #f7cc3e;
+}
+.unfavorite{
+    color: #ccc;
+}
+.task-progress {
+    background-color: #ccc;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+select.progress{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+.todo{
+    background-color:rgba(199, 188, 32, 0.719);
+    color:rgb(88, 83, 13) ;
+    border: 1px solid transparent;
+}
+.doing{
+    background-color: rgb(254 240 138);
+    color:rgb(90, 85, 47) ;
+    border: 1px solid transparent;
+}
+.done{
+    background-color:rgb(187 247 208);
+    color: rgb(12, 71, 33);
+    border: 1px solid transparent;
+}

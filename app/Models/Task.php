@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id','task_title', 'task_description', 'completed_at', 'due_date', 'priority'];
+    protected $fillable = ['user_id','task_title', 'task_description', 'completed_at', 'due_date', 'priority','favorite','progress'];
     protected $dates = ['due_date', 'completed_at'];
 
     const Urgent = 'Urgent';
@@ -25,7 +25,14 @@ class Task extends Model
             'low' => self::Low,
         ];
     }
-
+    protected $enum = [
+        'progress' => [
+            'to do' => 'to do',
+            'doing' => 'doing',
+            'done' => 'done'
+        ]
+    ];
+    
     public function tags()
     {
         return $this->belongsToMany(Tags::class, 'tasks_tags', 'task_id', 'tag_id');
@@ -35,4 +42,11 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function toggleFavorite()
+    {
+        $this->favorite = !$this->favorite;
+        $this->save();
+    }
+
 }

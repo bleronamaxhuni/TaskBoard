@@ -13,8 +13,7 @@
 
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-bold text-gray-800">Dashboard</h2>
-
-            <button
+            <a href="{!!url('/tasks')!!}"> <button
                 class="shadow inline-flex items-center bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline text-white font-semibold py-2 px-4 rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 w-5 h-5" viewBox="0 0 24 24"
                     stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
@@ -23,8 +22,8 @@
                     <line x1="12" y1="5" x2="12" y2="19" />
                     <line x1="5" y1="12" x2="19" y2="12" />
                 </svg>
-                Create Tasks
-            </button>
+                Create New Tasks
+            </button></a>
         </div>
 
         <div class="bg-orange-200 mb-10 p-6 rounded-lg shadow">
@@ -177,10 +176,117 @@
             </div>
         </div>
 
+
+        
+{{--         
+        <div class="grid grid-cols-4 gap-6 py-5">
+            <div class="grid mt-5">
+                <a class="transform  hover:scale-105 transition duration-300 shadow-xl rounded-lg intro-y bg-white"
+                    href="#">
+                    <div class="p-5">
+                        <div class="flex justify-between">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-blue-400"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
+                        </div>
+                        <div class="ml-2 w-full flex-1">
+                            <div>
+                                <div class="mt-3 text-3xl font-bold leading-8">{{ $task->user->tasks_count }}</div>
+
+                                <div class="mt-1 text-base text-gray-600">Total Tasks</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="grid mt-5">
+                <a class="transform  hover:scale-105 transition duration-300 shadow-xl rounded-lg intro-y bg-white"
+                    href="#">
+                    <div class="p-5">
+                        <div class="flex justify-between">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-blue-400"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
+                            <div
+                                class="bg-green-500 rounded-full h-6 px-2 flex justify-items-center text-white font-semibold text-sm">
+                                <span class="flex items-center">30%</span>
+                            </div>
+                        </div>
+                        <div class="ml-2 w-full flex-1">
+                            <div>
+                                <div class="mt-3 text-3xl font-bold leading-8">4.510</div>
+
+                                <div class="mt-1 text-base text-gray-600">Item Sales</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="grid mt-5">
+                <a class="transform  hover:scale-105 transition duration-300 shadow-xl rounded-lg intro-y bg-white"
+                    href="#">
+                    <div class="p-5">
+                        <div class="flex justify-between">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-blue-400"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
+                            <div
+                                class="bg-green-500 rounded-full h-6 px-2 flex justify-items-center text-white font-semibold text-sm">
+                                <span class="flex items-center">30%</span>
+                            </div>
+                        </div>
+                        <div class="ml-2 w-full flex-1">
+                            <div>
+                                <div class="mt-3 text-3xl font-bold leading-8">4.510</div>
+
+                                <div class="mt-1 text-base text-gray-600">Item Sales</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="grid mt-5">
+                <a class="transform  hover:scale-105 transition duration-300 shadow-xl rounded-lg intro-y bg-white"
+                    href="#">
+                    <div class="p-5">
+                        <div class="flex justify-between">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-blue-400"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
+                            <div
+                                class="bg-green-500 rounded-full h-6 px-2 flex justify-items-center text-white font-semibold text-sm">
+                                <span class="flex items-center">30%</span>
+                            </div>
+                        </div>
+                        <div class="ml-2 w-full flex-1">
+                            <div>
+                                <div class="mt-3 text-3xl font-bold leading-8">4.510</div>
+
+                                <div class="mt-1 text-base text-gray-600">Item Sales</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div> --}}
+
+
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-bold text-gray-800">Last Tasks</h2>
 
-            <a href="#" class="text-blue-600 hover:text-blue-500 font-medium">View all</a>
+            <a href="{!!url('/tasks')!!}" class="text-blue-600 hover:text-blue-500 font-medium">View all</a>
         </div>
     </div>
 </div>

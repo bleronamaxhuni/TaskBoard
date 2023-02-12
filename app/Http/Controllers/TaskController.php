@@ -111,6 +111,7 @@ class TaskController extends Controller
     
         return back()->with("message", "Progress has been added");
     }
+    
     public function destroy(Task $task)
     {
         $task->delete();
