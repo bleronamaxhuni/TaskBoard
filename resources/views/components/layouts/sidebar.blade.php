@@ -12,7 +12,7 @@
         <div class="flex items-center px-6 py-3 h-16">
             <div class="text-2xl font-bold tracking-tight text-gray-800">
                 <a href="/" class="flex items-center pt-4 mb-5">
-                    <img src="{{ asset('/images/badge.png') }}" class="h-6 mr-3 sm:h-7" />
+                    <img src="{{ asset('/images/badge.png') }}" class="h-8 mr-3 sm:h-7" />
                     <span class="self-center font-semibold whitespace-nowrap ">TaskBoard</span>
                 </a>
             </div>
@@ -84,8 +84,8 @@
     <div class="flex items-center px-6 py-3 h-16">
         <div class="text-2xl font-bold tracking-tight text-gray-800">
             <a href="/" class="flex items-center pt-4 mb-5">
-                <img src="{{ asset('/images/badge.png') }}" class="h-6 mr-3 sm:h-7" />
-                <span class="self-center font-semibold whitespace-nowrap ">TaskBoard</span>
+                <img src="{{ asset('/images/badge.png') }}" class="h-9 mr-3 sm:h-7" />
+                <span class="self-center font-semibold whitespace-nowrap text-lg mt-4">TaskBoard</span>
             </a>
         </div>
     </div>
