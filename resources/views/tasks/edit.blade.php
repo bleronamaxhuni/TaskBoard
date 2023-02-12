@@ -26,6 +26,9 @@
         @if($errors->has('task_description'))
         {{$errors->first('task_description')}}
         @endif
+        @if (Session::has('error'))
+        {{Session::get('error')}}
+        @endif
     </div>
     <div x-data="{ sidemenu: false }" class="h-screen flex overflow-hidden" x-cloak
         @keydown.window.escape="sidemenu = false">

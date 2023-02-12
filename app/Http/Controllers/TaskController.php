@@ -66,14 +66,20 @@ class TaskController extends Controller
     }
     public function edit(Task $task)
     {
+        $user = Auth::user();
         $tags = Tags::all();
         $task['due_date'] = Carbon::parse($task['due_date'])->format('Y-m-d');
+    
+        if ($task->user_id !== $user->id) {
+            return redirect()->back()->with('error', 'You are not authorized to access this task.');
+        }
         return view('tasks.edit', [
             'task' => $task,
             'priorities' => Task::Priorities(),
             'tags' => $tags,
         ]);
     }
+    
 
     public function update(Request $request, Task $task)
     {
