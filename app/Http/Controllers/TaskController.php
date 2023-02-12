@@ -94,7 +94,7 @@ class TaskController extends Controller
         return back()->with("message", "Task has been updated");
     }
 
-    public function completed(Request $request, Task $task)
+    public function toggleFavorite(Request $request, Task $task)
     {
         if ($task->favorite == 0) {
             $task->update(['favorite' => 1]);
@@ -104,7 +104,13 @@ class TaskController extends Controller
             return back()->with("message", "Task has been unfavorited");
         }
     }
-
+    public function updateProgress(Request $request, Task $task)
+    {
+        $task->progress = $request->progress;
+        $task->save();
+    
+        return back()->with("message", "Progress has been added");
+    }
     public function destroy(Task $task)
     {
         $task->delete();
