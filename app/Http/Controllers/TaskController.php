@@ -86,15 +86,35 @@ class TaskController extends Controller
         return back()->with("message", "Task has been updated");
     }
 
-    public function completed(Request $request, Task $task)
+    // public function completed(Request $request, Task $task)
+    // {
+    //     if ($task->completed_at == NULL) {
+    //         $task->update(['completed_at' => now()]);
+    //         return back()->with("message", "Task has been completed");
+    //     } else {
+    //         $task->update(['completed_at' => NULL]);
+    //         return back()->with("message", "Task has been uncompleted");
+    //     }
+    // }
+    public function toggleFavorite(Request $request, Task $task)
     {
         if ($task->completed_at == NULL) {
             $task->update(['completed_at' => now()]);
             return back()->with("message", "Task has been completed");
+        if ($task->favorite == 0) {
+            $task->update(['favorite' => 1]);
+            return back()->with("message", "Task has been favorited");
         } else {
-            $task->update(['completed_at' => NULL]);
-            return back()->with("message", "Task has been uncompleted");
+            $task->update(['favorite' => 0]);
+            return back()->with("message", "Task has been unfavorited");
         }
+    }
+    public function updateProgress(Request $request, Task $task)
+    {
+        $task->progress = $request->progress;
+        $task->save();
+    
+        return back()->with("message", "Progress has been added");
     }
 
     public function destroy(Task $task)

@@ -46,13 +46,21 @@
                         <tbody>
                             @forelse($tasks as $task)
                             <tr class="border-b border-gray-200">
+                                <td
+                                    class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2 h-full">
+                                    <form action="/tasks/{{ $task['id'] }}/favorite" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit">
+                                            <i class="fa-solid fa-star {{ $task->favorite ? 'favorite' : 'unfavorite' }}"></i>
+                                        </button>
+                                    </form>                                    
+                                </td>
                                 <td class="px-5 py-5 bg-white text-sm">
                                     <div class="flex">
-                                        <div class="ml-3">
                                             <p class="text-gray-900 whitespace-no-wrap">
                                                 {{ $task->task_title }}
                                             </p>
-                                        </div>
                                     </div>
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm">
@@ -76,11 +84,30 @@
                                         </span>
                                     </p>
                                 </td>
+                                <td
+                                    class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2 h-full">
+                                    <form method="POST" action="/tasks/{{ $task['id'] }}/progress">
+                                        @csrf
+                                        <option class="hidden" value="" disabled selected>{{old('progress', $task['progress'])}}</option>
+                                        <select name="progress" class="progress p-1 rounded font-semibold
+                                        @if ($task->progress === 'to do')
+                                            todo
+                                            @elseif ($task->progress === 'doing')
+                                            doing
+                                            @elseif ($task->progress === 'done')
+                                            done
+                                        @endif"  onchange="this.form.submit()" >
+                                            <option value="to do" {{ $task->progress === 'to do' ? 'selected' : '' }}>To do</option>
+                                            <option value="doing" {{ $task->progress === 'doing' ? 'selected' : '' }}>Doing</option>
+                                            <option value="done" {{ $task->progress === 'done' ? 'selected' : '' }}>Done</option>
+                                        </select>
+                                    </form>
+                                </td>
                                 <td class="px-5 py-5 bg-white text-sm">
                                     <p class="whitespace-no-wrap text-sm focus:outline-none leading-none  text-center">
                                         <span >
                                             @foreach ($task->tags as $tag)
-                                            <span class="text-black bg-blue-50 p-2 border-2 border-blue-200  rounded">{{ $tag->name }}</span>
+                                            <span class="text-black bg-gray-300 p-2 border-2 border-gray-300  rounded-2xl">{{ $tag->name }}</span>
                                             @endforeach
                                         </span>
                                     </p>                                
@@ -95,7 +122,7 @@
                                     @endif
                                 </td>
 
-                                <td class="px-5 py-5 bg-white text-sm text-center">
+                                {{-- <td class="px-5 py-5 bg-white text-sm text-center">
                                     <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
                                         <form action="/tasks/{{ $task['id'] }}/completed" method="POST">
                                             @csrf
@@ -109,7 +136,7 @@
                                             @endif
                                         </form>
                                     </span>
-                                </td>
+                                </td> --}}
                                 <td
                                     class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2 h-full">
                                     <button

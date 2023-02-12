@@ -32,6 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
     Route::delete('tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
     Route::patch('tasks/{task}/completed', [TaskController::class, 'completed'])->name('tasks.completed');
+    Route::patch('tasks/{task}/favorite',[TaskController::class, 'toggleFavorite']);
+    Route::post('/tasks/{task}/progress', [TaskController::class,'updateProgress']);
+
     // Tags
     Route::get('tags', [TagsController::class, 'index'])->name('tags.index');
     Route::post('tags/create', [TagsController::class, 'store'])->name('tags.store');
