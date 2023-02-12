@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Projects;
 use App\Models\Tags;
 use App\Models\Task;
 use App\Models\User;
@@ -34,6 +35,7 @@ class TaskController extends Controller
             'tasks' => $tasks,
             'priorities' => Task::Priorities(),
             'tags' => Tags::all(),
+            'projects'=>Projects::all()
         ]);
     }
 

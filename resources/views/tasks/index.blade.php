@@ -33,7 +33,7 @@
 
     <div x-data="{ sidemenu: false }" class="h-screen flex overflow-hidden" x-cloak
         @keydown.window.escape="sidemenu = false">
-        <x-layouts.sidebar></x-layouts.sidebar>
+        <x-layouts.sidebar :projects=$projects></x-layouts.sidebar>
         <div class="flex-1 flex-col relative z-0 overflow-y-auto">
             <x-layouts.topbar></x-layouts.topbar>
             <div class="md:max-w-6xl md:mx-auto px-4 py-8">

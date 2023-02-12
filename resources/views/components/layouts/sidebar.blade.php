@@ -140,33 +140,67 @@
                     Tags
                 </a>
             </li>
-
             <li>
-                <span class="font-semibold text-gray-600 mt-5">Projects</span>
-                <hr>
-                <a href="{!!url('/projects')!!}"
-                    class="mb-1 px-2 py-2 rounded-lg flex items-center font-medium text-gray-700  hover:text-blue-600 hover:bg-gray-200">
-                    Projects
-                </a>
+                <button class="font-medium text-gray-700  hover:text-blue-600 bg-gray-100 hover:bg-gray-200 py-1 px-2 rounded flex justify-between w-full" id="add-button">
+                    <span>
+                    Create a new project 
+                    </span>
+                    <span>
+                    <i class="fas fa-plus"></i>
+                    </span> 
+                </button>
+
+                <div id="form-container" class="hidden" class="w-full">
+                    <form action="/projects/create" method="POST" class="w-full"  onchange="this.form.submit()">
+                    @csrf
+                        <input type="text" name="name" value="{{old('name')}}" id="name" placeholder="New Project"
+                            class="w-full border-2 rounded p-1 border-blue-400 outline-none mt-3" required>
+                    </form>
+                </div>
             </li>
             <li>
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#createProjectForm" aria-expanded="false" aria-controls="createProjectForm">
-                    <i class="fas fa-plus"></i>
-                </button>                
-                <!-- Form to create a new project -->
-                <div class="collapse" id="createProjectForm">
-                    <div class="card card-body">
-                        <form action="{{ route('projects.store') }}" method="post">
-                            @csrf
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Project Name" name="project_name" required>
+                <h1 class="mt-5 px-2 py-2 rounded-lg flex items-center font-medium text-gray-700">Projects</h1>
+                <hr>
+                @foreach($projects as $project)
+                {{-- <tr class="border-b border-gray-200"> --}}
+                    {{-- <td class="px-5 py-5 bg-white text-sm"> --}}
+                        <div class="flex">
+                            <div class="ml-3">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    {{ $project->name }}
+                                </p>
                             </div>
-                            <button type="submit" class="btn btn-primary">Create Project</button>
+                        </div>
+                    {{-- </td> --}}
+                    {{-- <td class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2 h-full">
+                        <button
+                            class="rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"><a
+                                href=""><i class="fa-solid fa-pen-to-square"></i> <span
+                                    class="md:hidden">Edit</span></a>
+                        </button>
+
+                        <form action="/projects/{{ $project['id'] }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button
+                                class="rounded-lg px-4 py-2 bg-red-600 text-red-100 hover:bg-red-700 duration-300"><i
+                                    class="fa-solid fa-trash"></i> <input type="submit" name="" value="Delete"
+                                    class="md:hidden">
+                            </button>
                         </form>
-                    </div>
-                </div>
+                    </td> --}}
+                {{-- </tr> --}}
+                @endforeach
             </li>
         </ul>
     </div>
 </div>
 <!-- @end Menu Above Medium Screen -->
+<script>
+    const addButton = document.getElementById('add-button');
+    const formContainer = document.getElementById('form-container');
+
+    addButton.addEventListener('click', function() {
+    formContainer.classList.toggle('hidden');
+    });
+</script>

@@ -100,3 +100,6 @@ select.progress{
     color: rgb(12, 71, 33);
     border: 1px solid transparent;
 }
+.hidden {
+    display: none;
+}

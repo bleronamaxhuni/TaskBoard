@@ -42,7 +42,8 @@ class ProjectsController extends Controller
             'name' => 'required|max:200',
         ]);
         Projects::create($project);
-        // dd($project);
+        
+        return back()->with("message", "Project has been created");
     }
 
     /**
