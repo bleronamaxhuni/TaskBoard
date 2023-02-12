@@ -141,6 +141,31 @@
                 </a>
             </li>
 
+            <li>
+                <span class="font-semibold text-gray-600 mt-5">Projects</span>
+                <hr>
+                <a href="{!!url('/projects')!!}"
+                    class="mb-1 px-2 py-2 rounded-lg flex items-center font-medium text-gray-700  hover:text-blue-600 hover:bg-gray-200">
+                    Projects
+                </a>
+            </li>
+            <li>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#createProjectForm" aria-expanded="false" aria-controls="createProjectForm">
+                    <i class="fas fa-plus"></i>
+                </button>                
+                <!-- Form to create a new project -->
+                <div class="collapse" id="createProjectForm">
+                    <div class="card card-body">
+                        <form action="{{ route('projects.store') }}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Project Name" name="project_name" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create Project</button>
+                        </form>
+                    </div>
+                </div>
+            </li>
         </ul>
     </div>
 </div>
