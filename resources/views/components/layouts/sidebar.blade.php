@@ -141,55 +141,61 @@
                 </a>
             </li>
             <li>
-                <button class="font-medium text-gray-700  hover:text-blue-600 bg-gray-100 hover:bg-gray-200 py-1 px-2 rounded flex justify-between w-full" id="add-button">
+                <button
+                    class="font-medium text-gray-700  hover:text-blue-600 bg-gray-100 hover:bg-gray-200 py-1 px-2 rounded flex justify-between w-full"
+                    id="add-button">
                     <span>
-                    Create a new project 
+                        Create a new project
                     </span>
                     <span>
-                    <i class="fas fa-plus"></i>
-                    </span> 
+                        <i class="fas fa-plus"></i>
+                    </span>
                 </button>
 
                 <div id="form-container" class="hidden" class="w-full">
-                    <form action="/projects/create" method="POST" class="w-full"  onchange="this.form.submit()">
-                    @csrf
+                    <form action="/projects/create" method="POST" class="w-full" onchange="this.form.submit()">
+                        @csrf
                         <input type="text" name="name" value="{{old('name')}}" id="name" placeholder="New Project"
                             class="w-full border-2 rounded p-1 border-blue-400 outline-none mt-3" required>
                     </form>
                 </div>
             </li>
             <li>
-                <h1 class="mt-5 px-2 py-2 rounded-lg flex items-center font-medium text-gray-700">Projects</h1>
-                <hr>
+                <h1 class="mt-5 px-2 py-2 rounded-lg flex items-center font-medium text-lg text-gray-700">All Projects
+                </h1>
+                <hr class="mb-2">
                 @foreach($projects as $project)
-                {{-- <tr class="border-b border-gray-200"> --}}
-                    {{-- <td class="px-5 py-5 bg-white text-sm"> --}}
-                        <div class="flex">
-                            <div class="ml-3">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ $project->name }}
-                                </p>
-                            </div>
-                        </div>
-                    {{-- </td> --}}
-                    {{-- <td class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2 h-full">
-                        <button
-                            class="rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"><a
-                                href=""><i class="fa-solid fa-pen-to-square"></i> <span
-                                    class="md:hidden">Edit</span></a>
-                        </button>
-
-                        <form action="/projects/{{ $project['id'] }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button
-                                class="rounded-lg px-4 py-2 bg-red-600 text-red-100 hover:bg-red-700 duration-300"><i
-                                    class="fa-solid fa-trash"></i> <input type="submit" name="" value="Delete"
-                                    class="md:hidden">
+                <div
+                    class="flex justify-between items-center bg-gray-100 p-2 mb-2 rounded border-2 border-transparent font-medium text-gray-700  hover:bg-gray-200">
+                    <div class="">
+                        <p class="text-gray-900 whitespace-no-wrap text-base font-semibold">
+                            {{ $project->name }}
+                        </p>
+                    </div>
+                        <div class="flex gap-1 ">
+                            <button class="rounded p-1 text-blue-600 hover:text-white hover:bg-blue-600 duration-300"
+                                id="edit-button">
+                                <i class="fa-solid fa-pen-to-square"></i>
                             </button>
+                            <form action="/projects/{{ $project['id'] }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button
+                                    class="rounded p-1 text-red-600 hover:text-white hover:bg-red-700 duration-300"><i
+                                        class="fa-solid fa-trash text-sm"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="edit-container" class="hidden" class="w-full">
+                        <form action="/projects/{{$project['id']}}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <input class="w-full bg-gray-100  mb-3 p-1 rounded h-11 border-2 border-gray-700" type="text"
+                                placeholder="Project Name" name="name" value="{{old('name', $project['name'])}}"
+                                required>
                         </form>
-                    </td> --}}
-                {{-- </tr> --}}
+                    </div>
                 @endforeach
             </li>
         </ul>
@@ -202,5 +208,11 @@
 
     addButton.addEventListener('click', function() {
     formContainer.classList.toggle('hidden');
+    });
+    const editButton = document.getElementById('edit-button');
+    const editContainer = document.getElementById('edit-container');
+
+    editButton.addEventListener('click', function() {
+    editContainer.classList.toggle('hidden');
     });
 </script>

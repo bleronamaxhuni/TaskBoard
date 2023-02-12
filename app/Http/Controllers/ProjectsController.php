@@ -75,9 +75,14 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Projects $project)
     {
-        //
+        $projects = $request->validate([
+            'name' => 'required|max:200',
+        ]);
+        $project->update($projects);
+        
+        return back()->with("message", "Project has been updated");
     }
 
     /**
