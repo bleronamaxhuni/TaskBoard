@@ -66,10 +66,12 @@ class TaskController extends Controller
     }
     public function edit(Task $task)
     {
+        $tags = Tags::all();
         $task['due_date'] = Carbon::parse($task['due_date'])->format('Y-m-d');
         return view('tasks.edit', [
             'task' => $task,
             'priorities' => Task::Priorities(),
+            'tags' => $tags,
         ]);
     }
 
@@ -80,27 +82,20 @@ class TaskController extends Controller
             'task_description' => 'required|max:100000',
             'due_date' => 'date|after_or_equal:created_at|nullable',
             'priority' => 'nullable',
-
+            'tags'=>'array|nullable'
         ]);
+    
+        $tags = implode(',', $request->tags);
+        $tag_ids = explode(',', $tags);
+        $task->tags()->sync($tag_ids);
+    
         $task->update($tasks);
+    
         return back()->with("message", "Task has been updated");
     }
 
-    // public function completed(Request $request, Task $task)
-    // {
-    //     if ($task->completed_at == NULL) {
-    //         $task->update(['completed_at' => now()]);
-    //         return back()->with("message", "Task has been completed");
-    //     } else {
-    //         $task->update(['completed_at' => NULL]);
-    //         return back()->with("message", "Task has been uncompleted");
-    //     }
-    // }
     public function toggleFavorite(Request $request, Task $task)
     {
-        if ($task->completed_at == NULL) {
-            $task->update(['completed_at' => now()]);
-            return back()->with("message", "Task has been completed");
         if ($task->favorite == 0) {
             $task->update(['favorite' => 1]);
             return back()->with("message", "Task has been favorited");
@@ -116,7 +111,7 @@ class TaskController extends Controller
     
         return back()->with("message", "Progress has been added");
     }
-
+    
     public function destroy(Task $task)
     {
         $task->delete();
