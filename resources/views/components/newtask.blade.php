@@ -19,6 +19,12 @@
             <input type="text" name="task_title" value="{{old('task_title')}}" id="task_title" required class="w-full p-2 mt-2 mb-3  pl-4 pr-10 py-3 leading-none rounded-lg shadow-sm focus:outline-none text-gray-600 font-medium focus:ring focus:ring-blue-50 bg-gray-200">
             <label for="task_description" class="font-bold mb-1 text-gray-700 block">Description</label>
             <textarea type="text" name="task_description" value="{{old('task_description')}}" required class="w-full p-2 mt-2 mb-3  pl-4 pr-10 py-3 leading-none rounded-lg shadow-sm focus:outline-none text-gray-600 font-medium focus:ring focus:ring-blue-50 bg-gray-200" id="task_description"></textarea>
+            <label for="projects" class="font-bold mb-1 text-gray-700 block">Projects</label>
+            <select name="project_id" class="w-full  p-2 mt-2 mb-3  pl-4 pr-10 py-3 leading-none rounded-lg shadow-sm focus:outline-none text-gray-600 font-medium focus:ring focus:ring-blue-50 bg-gray-200">
+                @foreach ($projects as $project )
+                <option value="{{ $project->id }}">{{ $project->name }}</option>
+                @endforeach
+            </select>
             <label for="tags" class="font-bold mb-1 text-gray-700 block">Tags</label>
             <select x-cloak id="select" class="w-full hidden p-2 mt-2 mb-3  pl-4 pr-10 py-3 leading-none rounded-lg shadow-sm focus:outline-none text-gray-600 font-medium focus:ring focus:ring-blue-50 bg-gray-200">
                 @foreach ($tags as $tag )

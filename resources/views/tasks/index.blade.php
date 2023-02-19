@@ -42,7 +42,7 @@
                         <h1 class="text-3xl font-bold">Tasks</h1>
                         <x-search></x-search>
                     </div>
-                    <x-newtask :priorities=$priorities :tags=$tags></x-newtask>
+                    <x-newtask :priorities=$priorities :tags=$tags :projects="$projects"></x-newtask>
                 </div>
                 <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden mt-10">
                     <table class="min-w-full leading-normal bg-white">
@@ -56,20 +56,23 @@
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit">
-                                            <i class="fa-solid fa-star {{ $task->favorite ? 'favorite' : 'unfavorite' }}"></i>
+                                            <i
+                                                class="fa-solid fa-star {{ $task->favorite ? 'favorite' : 'unfavorite' }}"></i>
                                         </button>
-                                    </form>                                    
+                                    </form>
+                                </td>
+                                <td  class="px-5 py-5 bg-white text-sm">
+                                    <span>{{ $task->project->name }}</span>
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm">
                                     <div class="flex">
-                                            <p class="text-gray-900 whitespace-no-wrap">
-                                                {{ $task->task_title }}
-                                            </p>
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                            {{ $task->task_title }}
+                                        </p>
                                     </div>
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm">
-                                    <p class="text-gray-900 whitespace-no-wrap">{{ Str::limit($task->task_description,
-                                        25) }}</p>
+                                    <p class="text-gray-900 whitespace-no-wrap">{{$task->task_description}}</p>
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm">
                                     <p
@@ -92,7 +95,8 @@
                                     class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2 h-full">
                                     <form method="POST" action="/tasks/{{ $task['id'] }}/progress">
                                         @csrf
-                                        <option class="hidden" value="" disabled selected>{{old('progress', $task['progress'])}}</option>
+                                        <option class="hidden" value="" disabled selected>{{old('progress',
+                                            $task['progress'])}}</option>
                                         <select name="progress" class="progress p-1 rounded font-semibold
                                         @if ($task->progress === 'to do')
                                             todo
@@ -100,21 +104,26 @@
                                             doing
                                             @elseif ($task->progress === 'done')
                                             done
-                                        @endif"  onchange="this.form.submit()" >
-                                            <option value="to do" {{ $task->progress === 'to do' ? 'selected' : '' }}>To do</option>
-                                            <option value="doing" {{ $task->progress === 'doing' ? 'selected' : '' }}>Doing</option>
-                                            <option value="done" {{ $task->progress === 'done' ? 'selected' : '' }}>Done</option>
+                                        @endif" onchange="this.form.submit()">
+                                            <option value="to do" {{ $task->progress === 'to do' ? 'selected' : '' }}>To
+                                                do</option>
+                                            <option value="doing" {{ $task->progress === 'doing' ? 'selected' : ''
+                                                }}>Doing</option>
+                                            <option value="done" {{ $task->progress === 'done' ? 'selected' : '' }}>Done
+                                            </option>
                                         </select>
                                     </form>
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm">
                                     <p class="whitespace-no-wrap text-sm focus:outline-none leading-none  text-center">
-                                        <span >
+                                        <span>
                                             @foreach ($task->tags as $tag)
-                                            <span class="text-black bg-gray-300 p-2 border-2 border-gray-300  rounded-2xl">{{ $tag->name }}</span>
+                                            <span
+                                                class="text-black bg-gray-300 p-2 border-2 border-gray-300  rounded-2xl">{{
+                                                $tag->name }}</span>
                                             @endforeach
                                         </span>
-                                    </p>                                
+                                    </p>
                                 <td class="px-5 py-5 bg-white text-sm">
                                     @if($task->due_date != null)
                                     <p class="whitespace-no-wrap text-sm focus:outline-none leading-none  text-center">
@@ -153,9 +162,9 @@
                                         @csrf
                                         @method('DELETE')
                                         <button
-                                            class="rounded-lg px-4 py-2 bg-red-600 text-red-100 hover:bg-red-700 duration-300" onclick="deleteFunction();"> <i
-                                                class="fa-solid fa-trash"></i> <input type="submit" name=""
-                                                value="Delete" class="md:hidden">
+                                            class="rounded-lg px-4 py-2 bg-red-600 text-red-100 hover:bg-red-700 duration-300"
+                                            onclick="deleteFunction();"> <i class="fa-solid fa-trash"></i> <input
+                                                type="submit" name="" value="Delete" class="md:hidden">
                                         </button>
                                     </form>
                                 </td>

@@ -44,10 +44,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('tags/{tag}', [TagsController::class, 'destroy'])->name('tags.destroy');
 
     // Projects
-    // Route::get('projects', [ProjectsController::class,'index'])->name('projects.index');
+    Route::get('projects/{project}/tasks', [ProjectsController::class,'index'])->name('projects.index');
+    // Route::get('projects/{project}/tasks/filtered',  [ProjectsController::class,'filter'])->name('projects.filter');
     Route::post('projects/create', [ProjectsController::class, 'store'])->name('projects.store');
-    Route::get('projects/{project}/edit', [ProjectsController::class, 'edit'])->name('projects.edit');
-    Route::patch('projects/{project}', [ProjectsController::class, 'update'])->name('projects.update');
+    Route::get('projects/{project}/edit', [ProjectsController::class, 'index'])->name('projects.index');
+    Route::patch('projects/{project}/updated', [ProjectsController::class, 'update'])->name('projects.update');
     Route::delete('projects/{project}', [ProjectsController::class, 'destroy'])->name('projects.destroy');
 
 });
