@@ -5,27 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Projects;
 use App\Models\Tags;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectsController extends Controller
 {
-    public function index(Projects $project)
+
+    public function index(Projects $project,Request $request)
     {
-        // $currentuser = Auth::user();
-        
-        // if (request('searchProject')) {
-        //     $searchTerm = request('searchProject');
-        //     $projects = Projects::where(function ($query) use ($searchTerm) {
-        //         $query->where('name', 'like', "%{$searchTerm}%");
-        //     })->where('user_id', $currentuser->id)->paginate(5);
-        // } else {
-        //     $projects = Projects::where('user_id', '=', $currentuser->id)->paginate(5);
-        // }
-        // return view('projects.index', [
-        //     'projects' => $projects,
-        //     'project' => $project,
-        // ]);
         $currentuser = Auth::user();
 
         $projects = $currentuser->projects;
@@ -48,11 +36,6 @@ class ProjectsController extends Controller
         return back()->with("message", "Project has been created");
     }
 
-    public function show(Projects $project)
-    {    
-
-    }
-
     public function edit(Projects $project)
     {
         return view('projects.index',['project'=>$project]);
@@ -67,7 +50,7 @@ class ProjectsController extends Controller
         
         return back()->with("message", "Project has been updated");
     }
-
+    
     public function destroy(Projects $project)
     {
         $project->delete();
