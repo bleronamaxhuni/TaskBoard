@@ -42,7 +42,7 @@
                         <h1 class="text-3xl font-bold">Tasks</h1>
                         <x-search></x-search>
                     </div>
-                    <x-newtask :priorities=$priorities :tags=$tags></x-newtask>
+                    <x-newtask :priorities="$priorities" :tags="$tags" :projects="$projects"></x-newtask>
                 </div>
                 <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden mt-10">
                     <table class="min-w-full leading-normal bg-white">
@@ -115,6 +115,7 @@
                                             @endforeach
                                         </span>
                                     </p>                                
+                                </td>
                                 <td class="px-5 py-5 bg-white text-sm">
                                     @if($task->due_date != null)
                                     <p class="whitespace-no-wrap text-sm focus:outline-none leading-none  text-center">

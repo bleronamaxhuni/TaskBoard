@@ -44,9 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('tags/{tag}', [TagsController::class, 'destroy'])->name('tags.destroy');
 
     // Projects
-    Route::get('projects', [ProjectsController::class,'index'])->name('projects.index');
+    Route::get('projects/{project}/tasks', [ProjectsController::class,'index'])->name('projects.index');
     Route::post('projects/create', [ProjectsController::class, 'store'])->name('projects.store');
-    // Route::post('projects/{project}/edit', [ProjectsController::class, 'edit'])->name('projects.edit');
+    Route::post('projects/{project}/edit', [ProjectsController::class, 'edit'])->name('projects.edit');
     Route::delete('projects/{project}', [ProjectsController::class, 'destroy'])->name('projects.destroy');
 
 });
