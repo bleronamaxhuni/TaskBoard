@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id','task_title', 'task_description', 'completed_at', 'due_date', 'priority','favorite','progress'];
+    protected $fillable = ['user_id','task_title', 'task_description', 'completed_at', 'due_date', 'priority','favorite','progress','project_id'];
     protected $dates = ['due_date', 'completed_at'];
 
     const Urgent = 'Urgent';
@@ -41,6 +41,10 @@ class Task extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function project()
+    {
+        return $this->belongsTo(Projects::class);
     }
 
     public function toggleFavorite()

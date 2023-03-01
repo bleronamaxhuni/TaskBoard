@@ -14,7 +14,10 @@
 <body class="relative bg-gray-100 h-auto">
     <div x-data="{ sidemenu: false }" class="h-screen flex overflow-hidden" x-cloak
         @keydown.window.escape="sidemenu = false">
-        <x-layouts.sidebar></x-layouts.sidebar>
+        @php
+            $projects = \App\Models\Projects::all();
+        @endphp
+        <x-layouts.sidebar :projects=$projects></x-layouts.sidebar>
         <x-dashboard></x-dashboard>
     </div>
 </body>

@@ -140,14 +140,25 @@
                     Tags
                 </a>
             </li>
-
             <li>
-                <span class="font-semibold text-gray-600 mt-5">Projects</span>
-                <hr>
-                <a href="{!!url('/projects')!!}"
-                    class="mb-1 px-2 py-2 rounded-lg flex items-center font-medium text-gray-700  hover:text-blue-600 hover:bg-gray-200">
-                    Projects
-                </a>
+                <button
+                    class="font-medium text-gray-700  hover:text-blue-600 bg-gray-100 hover:bg-gray-200 py-1 px-2 rounded flex justify-between w-full"
+                    id="add-button">
+                    <span>
+                        Create a new project
+                    </span>
+                    <span>
+                        <i class="fas fa-plus"></i>
+                    </span>
+                </button>
+
+                <div id="form-container" class="hidden" class="w-full">
+                    <form action="/projects/create" method="POST" class="w-full" onchange="this.form.submit()">
+                        @csrf
+                        <input type="text" name="name" value="{{old('name')}}" id="name" placeholder="New Project"
+                            class="w-full border-2 rounded p-1 border-blue-400 outline-none mt-3" required>
+                    </form>
+                </div>
             </li>
             <li>
                 <h1 class="mt-5 px-2 py-2 rounded-lg flex items-center font-medium text-lg text-gray-700">All Projects
@@ -187,10 +198,10 @@
                         </button>
                         <form action="/projects/{{ $project['id']}}" method="POST">
                             @csrf
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Project Name" name="project_name" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Create Project</button>
+                            @method('DELETE')
+                            <button class="rounded p-1 text-red-600 hover:text-white hover:bg-red-700 duration-300">
+                                <i class="fa-solid fa-trash text-sm"></i>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -208,3 +219,19 @@
     </div>
 </div>
 <!-- @end Menu Above Medium Screen -->
+<script>
+    const addButton = document.getElementById('add-button');
+    const formContainer = document.getElementById('form-container');
+
+    addButton.addEventListener('click', function() {
+    formContainer.classList.toggle('hidden');
+    });
+    const editButtons = document.querySelectorAll('.edit-button');
+    const editForms = document.querySelectorAll('.edit-form');
+
+    editButtons.forEach((button, index) => {
+    button.addEventListener('click', function() {
+        editForms[index].style.display = editForms[index].style.display === 'none' ? 'block' : 'none';
+        });
+    });
+</script>

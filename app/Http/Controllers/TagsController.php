@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Projects;
 use App\Models\Tags;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,10 @@ class TagsController extends Controller
     public function index()
     {
         $tags = Tags::get();
-        return view('tags.index', ['tags' => $tags]);
+        return view('tags.index', [
+            'tags' => $tags,
+            'projects'=>Projects::all()
+        ]);
     }
 
     public function store(Request $request)
@@ -26,7 +30,10 @@ class TagsController extends Controller
 
     public function edit(Tags $tag)
     {
-        return view('tags.edit', ['tag' => $tag]);
+        return view('tags.edit', [
+        'tag' => $tag,
+        'projects'=>Projects::all()
+    ]);
     }
 
     public function update(Request $request, Tags $tag)

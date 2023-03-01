@@ -12,7 +12,6 @@
         integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     @vite('resources/css/app.css')
-    <script src="/js/customscript.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
     <script nomodule src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine-ie11.min.js" defer></script>
 </head>
@@ -20,71 +19,126 @@
 <body class="relative bg-gray-100 h-auto">
     <div x-data="{ sidemenu: false }" class="h-screen flex overflow-hidden" x-cloak
         @keydown.window.escape="sidemenu = false">
-        <x-layouts.sidebar></x-layouts.sidebar>
+        <x-layouts.sidebar :projects=$projects></x-layouts.sidebar>
         <div class="flex-1 flex-col relative z-0 overflow-y-auto">
             <x-layouts.topbar></x-layouts.topbar>
             <div class="md:max-w-6xl md:mx-auto px-4 py-8">
                 <div class="flex w-full justify-between py-9">
                     <h1 class="text-2xl font-bold">{{$project->name}}</h1>
                 </div>
-                <div class="pt-4">
-                    <div class="flex justify-end w-full mb-5">
-                        <form action="/projects/create" method="POST"
-                            class="w-5/12 flex border-2 border-transparent rounded-lg text-gray-600 font-medium focus:ring focus:ring-blue-50 bg-white shadow-sm">
-                            @csrf
-                            <input type="text" name="name" value="{{old('name')}}" id="name" placeholder="New Project"
-                                class="w-10/12 relative flex-auto block  px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding  focus:border-blue-600 focus:outline-none "
-                                required>
-                            <button type="submit"
-                                class="btn inline-block px-4 py-2  bg-blue-500 text-white rounded-lg focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
-                                type="button">Create</button>
-                        </form>
-                    </div>
+                <div class="">
                     <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden mt-10">
                         <table class="min-w-full leading-normal bg-white">
-                            <thead>
-                                <tr>
-                                    <th
-                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                        Title
-                                    </th>
-                                    <th
-                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-50  text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">
-                                        Action
-                                    </th>
-                                </tr>
-                            </thead>
+                            <x-layouts.tabletitles></x-layouts.tabletitles>
                             <tbody>
-                                @foreach($projects as $project)
+                                @forelse ($project->tasks as $task )
                                 <tr class="border-b border-gray-200">
-                                    <td class="px-5 py-5 bg-white text-sm">
-                                        <div class="flex">
-                                            <div class="ml-3">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $project->name }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2 h-full">
-                                        <button
-                                            class="rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"><a
-                                                href=""><i class="fa-solid fa-pen-to-square"></i> <span
-                                                    class="md:hidden">Edit</span></a>
-                                        </button>
-            
-                                        <form action="/projects/{{ $project['id'] }}" method="POST">
+                                    <td
+                                        class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2 h-full">
+                                        <form action="/tasks/{{ $task['id'] }}/favorite" method="POST">
                                             @csrf
-                                            @method('DELETE')
-                                            <button
-                                                class="rounded-lg px-4 py-2 bg-red-600 text-red-100 hover:bg-red-700 duration-300"><i
-                                                    class="fa-solid fa-trash"></i> <input type="submit" name="" value="Delete"
-                                                    class="md:hidden">
+                                            @method('PATCH')
+                                            <button type="submit">
+                                                <i
+                                                    class="fa-solid fa-star {{ $task->favorite ? 'favorite' : 'unfavorite' }}"></i>
                                             </button>
                                         </form>
                                     </td>
+                                    <td  class="px-5 py-5 bg-white text-sm">
+                                        <span>{{ $task->project->name }}</span>
+                                    </td>
+                                    <td class="px-5 py-5 bg-white text-sm">
+                                        <div class="flex">
+                                            <p class="text-gray-900 whitespace-no-wrap">
+                                                {{ $task->task_title }}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="px-5 py-5 bg-white text-sm">
+                                        <p class="text-gray-900 whitespace-no-wrap">{{$task->task_description}}</p>
+                                    </td>
+                                    <td class="px-5 py-5 bg-white text-sm">
+                                        <p
+                                            class="whitespace-no-wrap text-sm focus:outline-none leading-none  rounded text-center">
+                                            <span class="px-3 py-2
+                                            @if ($task->priority == 'High')
+                                                high
+                                                @elseif ($task->priority == 'Medium')
+                                                medium
+                                                @elseif ($task->priority == 'Low')
+                                                low
+                                                @elseif ($task->priority == 'Urgent')
+                                                urgent
+                                            @endif">
+                                                {{$task->priority}}
+                                            </span>
+                                        </p>
+                                    </td>
+                                    <td
+                                        class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2 h-full">
+                                        <form method="POST" action="/tasks/{{ $task['id'] }}/progress">
+                                            @csrf
+                                            <option class="hidden" value="" disabled selected>{{old('progress',
+                                                $task['progress'])}}</option>
+                                            <select name="progress" class="progress p-1 rounded font-semibold
+                                            @if ($task->progress === 'to do')
+                                                todo
+                                                @elseif ($task->progress === 'doing')
+                                                doing
+                                                @elseif ($task->progress === 'done')
+                                                done
+                                            @endif" onchange="this.form.submit()">
+                                                <option value="to do" {{ $task->progress === 'to do' ? 'selected' : '' }}>To
+                                                    do</option>
+                                                <option value="doing" {{ $task->progress === 'doing' ? 'selected' : ''
+                                                    }}>Doing</option>
+                                                <option value="done" {{ $task->progress === 'done' ? 'selected' : '' }}>Done
+                                                </option>
+                                            </select>
+                                        </form>
+                                    </td>
+                                    <td class="px-5 py-5 bg-white text-sm">
+                                        <p class="whitespace-no-wrap text-sm focus:outline-none leading-none  text-center">
+                                            <span>
+                                                @foreach ($task->tags as $tag)
+                                                <span
+                                                    class="text-black bg-gray-300 p-2 border-2 border-gray-300  rounded-2xl">{{
+                                                    $tag->name }}</span>
+                                                @endforeach
+                                            </span>
+                                        </p>
+                                    <td class="px-5 py-5 bg-white text-sm">
+                                        @if($task->due_date != null)
+                                        <p class="whitespace-no-wrap text-sm focus:outline-none leading-none  text-center">
+                                            @if ($task->due_date)
+                                            <span class="text-red-400 bg-red-50 p-2 border-2  rounded border-red-300">
+                                                {{ $task->due_date?->format('d/m/Y') }}</span>
+                                            @endif
+                                        </p>
+                                        @endif
+                                    </td>
+                                    <td
+                                        class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2 h-full">
+                                        <button
+                                            class="rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"><a
+                                                href="/tasks/{{ $task['id'] }}/edit"><i
+                                                    class="fa-solid fa-pen-to-square"></i> <span
+                                                    class="md:hidden">Edit</span></a>
+                                        </button>
+                                        <form action="/tasks/{{ $task['id'] }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                class="rounded-lg px-4 py-2 bg-red-600 text-red-100 hover:bg-red-700 duration-300"
+                                                onclick="deleteFunction();"> <i class="fa-solid fa-trash"></i> <input
+                                                    type="submit" name="" value="Delete" class="md:hidden">
+                                            </button>
+                                        </form>
+                                    </td>
+                                    @empty
+                                    <td class="px-5 py-5 text-bold"><span class="font-bold">{{$project->name}}</span> does not have any tasks yet.</td>
                                 </tr>
-                                @endforeach
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -92,5 +146,6 @@
             </div>
         </div>
     </div>
+    <script src="/js/customscript.js"></script>
 </body>
 </html>
