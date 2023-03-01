@@ -150,13 +150,42 @@
                 </a>
             </li>
             <li>
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#createProjectForm" aria-expanded="false" aria-controls="createProjectForm">
-                    <i class="fas fa-plus"></i>
-                </button>                
-                <!-- Form to create a new project -->
-                <div class="collapse" id="createProjectForm">
-                    <div class="card card-body">
-                        <form action="{{ route('projects.store') }}" method="post">
+                <h1 class="mt-5 px-2 py-2 rounded-lg flex items-center font-medium text-lg text-gray-700">All Projects
+                </h1>
+                <hr class="mb-2">
+                @foreach($projects as $project)
+                <div
+                    class="flex justify-between items-center bg-gray-100 p-2 mb-2 rounded border-2 border-transparent font-medium text-gray-700 hover:bg-gray-200">
+                    {{-- <a href="/projects/{{ $project->id }}/tasks">
+                        <div class="">
+                            <p class="text-gray-900 whitespace-no-wrap text-base font-semibold">
+                                {{ $project->name }}
+                            </p>
+                        </div>
+                    </a> --}}
+                    <div x-data="{dropdownMenu: false}" class="relative">
+                        <!-- Dropdown toggle button -->
+                        <button @click="dropdownMenu = ! dropdownMenu" class="flex items-center p-2  rounded-md w-full">
+                            <span class=""> {{ $project->name }} </span>
+                        </button>
+                        <!-- Dropdown list -->
+                        <div x-show="dropdownMenu" class="relative right-0 py-2 mt-2 bg-gray-100 rounded-md shadow-xl w-full">
+                            <a href="/projects/{{ $project['id'] }}/tasks" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 hover:text-white">
+                                Tasks
+                            </a>
+                            <a href="/projects/{{$project->id}}/members" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 hover:text-white">
+                                Members
+                            </a>
+                            {{-- <a href="/projects/{{$project['id']}}/members" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 hover:text-white">
+                                Add Members
+                            </a> --}}
+                        </div>
+                    </div>
+                    <div class="flex gap-1 ">
+                        <button class="edit-button rounded p-1 text-blue-600 hover:text-white hover:bg-blue-600">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <form action="/projects/{{ $project['id']}}" method="POST">
                             @csrf
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Project Name" name="project_name" required>
@@ -165,6 +194,15 @@
                         </form>
                     </div>
                 </div>
+                <div class="edit-form" style="display: none;">
+                    <form action="/projects/{{$project['id']}}/updated" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <input class="w-full bg-gray-100  mb-3 p-1 rounded h-11 border-2 border-gray-700" type="text"
+                            placeholder="Project Name" name="name" value="{{old('name', $project['name'])}}" required>
+                    </form>
+                </div>
+                @endforeach
             </li>
         </ul>
     </div>

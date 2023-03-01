@@ -25,7 +25,7 @@
             <x-layouts.topbar></x-layouts.topbar>
             <div class="md:max-w-6xl md:mx-auto px-4 py-8">
                 <div class="flex w-full justify-between py-9">
-                    <h1 class="text-3xl font-bold">Projects</h1>
+                    <h1 class="text-2xl font-bold">{{$project->name}}</h1>
                 </div>
                 <div class="pt-4">
                     <div class="flex justify-end w-full mb-5">
