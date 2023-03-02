@@ -3,19 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Projects;
-use App\Models\Tags;
-use App\Models\Task;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectsController extends Controller
 {
+
     public function index(Projects $project)
     {
-        $currentuser = Auth::user();
-
-        $projects = $currentuser->projects;
+        $projects = Auth::user()->project;
+        // dd($projects);
         
         return view('projects.index', [
             'projects' => $projects,
