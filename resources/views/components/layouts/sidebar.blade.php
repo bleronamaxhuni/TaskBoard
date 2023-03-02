@@ -68,6 +68,65 @@
                         Tags
                     </a>
                 </li>
+                <li>
+                    <button
+                        class="font-medium text-gray-700  hover:text-blue-600 bg-gray-100 hover:bg-gray-200 py-1 px-2 rounded flex justify-between w-full"
+                        id="add-button">
+                        <span>
+                            Create a new project
+                        </span>
+                        <span>
+                            <i class="fas fa-plus"></i>
+                        </span>
+                    </button>
+    
+                    <div id="form-container" class="hidden" class="w-full">
+                        <form action="/projects/create" method="POST" class="w-full" onchange="this.form.submit()">
+                            @csrf
+                            <input type="text" name="name" value="{{old('name')}}" id="name" placeholder="New Project"
+                                class="w-full border-2 rounded p-1 border-blue-400 outline-none mt-3" required>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <h1 class="mt-5 px-2 py-2 rounded-lg flex items-center font-medium text-lg text-gray-700">All Projects</h1>
+                    <hr class="mb-2">
+                    @foreach($projects as $project)
+                        @if ($project->user_id == auth()->id())
+                        <div class="flex justify-between items-center bg-gray-100 p-2 mb-2 rounded border-2 border-transparent font-medium text-gray-700 hover:bg-gray-200">
+                            <div class="">
+                                <p class="text-gray-900 whitespace-no-wrap text-base font-semibold">
+                                    <a href="{{ route('projects.index', $project) }}"
+                                        class="text-gray-900 whitespace-no-wrap text-base font-semibold">{{ $project->name
+                                        }}</a>
+                                </p>
+                            </div>
+                            <div class="flex gap-1 ">
+                                <button class="edit-button rounded p-1 text-blue-600 hover:text-white hover:bg-blue-600">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <form action="/projects/{{ $project->id }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="rounded p-1 text-red-600 hover:text-white hover:bg-red-700 duration-300">
+                                        <i class="fa-solid fa-trash text-sm"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+        
+                        <!-- This is the form that is initially hidden -->
+                        <div class="edit-form" style="display: none;">
+                            <form action="/projects/{{$project['id']}}/updated" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <input class="w-full bg-gray-100  mb-3 p-1 rounded h-11 border-2 border-gray-700" type="text"
+                                    placeholder="Project Name" name="name" value="{{old('name', $project['name'])}}" required>
+                            </form>
+                        </div>
+                        @endif
+                    @endforeach
+                </li>
 
             </ul>
         </div>
@@ -173,20 +232,6 @@
                                     }}</a>
                             </p>
                         </div>
-                        {{-- <div x-data="{dropdownMenu: false}" class="relative">
-                            <!-- Dropdown toggle button -->
-                            <button @click="dropdownMenu = ! dropdownMenu" class="flex items-center p-2  rounded-md w-full">
-                                <span class=""> {{ $project->name }} </span>
-                            </button>
-                            <!-- Dropdown list -->
-                            <div x-show="dropdownMenu"
-                                class="relative right-0 py-2 mt-2 bg-gray-100 rounded-md shadow-xl w-full">
-                                <a href="projects/{{ $project['id'] }}/tasks"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 hover:text-white">
-                                    Tasks
-                                </a>
-                            </div>
-                        </div> --}}
                         <div class="flex gap-1 ">
                             <button class="edit-button rounded p-1 text-blue-600 hover:text-white hover:bg-blue-600">
                                 <i class="fa-solid fa-pen-to-square"></i>

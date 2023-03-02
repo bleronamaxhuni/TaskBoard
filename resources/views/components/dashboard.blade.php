@@ -2,7 +2,7 @@
 $currentUserId = Auth::id(); // assuming you're using Laravel's built-in authentication
 $tasks = DB::table('tasks')
             ->where('user_id', $currentUserId)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('favorite')
             ->take(4)
             ->get();
 @endphp

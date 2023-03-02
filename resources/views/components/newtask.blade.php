@@ -22,7 +22,7 @@
             <label for="projects" class="font-bold mb-1 text-gray-700 block">Projects</label>
             <select name="project_id" class="w-full  p-2 mt-2 mb-3  pl-4 pr-10 py-3 leading-none rounded-lg shadow-sm focus:outline-none text-gray-600 font-medium focus:ring focus:ring-blue-50 bg-gray-200">
                 @foreach ($projects as $project )
-                <option value="{{ $project->id }}">{{ $project->name }}</option>
+                    <option value="{{ $project->id }}">{{ $project->name }}</option>
                 @endforeach
             </select>
             <label for="tags" class="font-bold mb-1 text-gray-700 block">Tags</label>
