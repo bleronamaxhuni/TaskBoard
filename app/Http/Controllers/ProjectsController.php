@@ -11,13 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectsController extends Controller
 {
-
-    public function index(Projects $project,Request $request)
+    public function index(Projects $project)
     {
         $currentuser = Auth::user();
 
         $projects = $currentuser->projects;
-
+        
         return view('projects.index', [
             'projects' => $projects,
             'project' => $project,

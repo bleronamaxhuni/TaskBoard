@@ -47,8 +47,8 @@ Route::middleware('auth')->group(function () {
     Route::get('projects/{project}/tasks', [ProjectsController::class,'index'])->name('projects.index');
     Route::post('projects/create', [ProjectsController::class, 'store'])->name('projects.store');
     Route::post('projects/{project}/edit', [ProjectsController::class, 'edit'])->name('projects.edit');
+    Route::patch('projects/{project}/updated', [ProjectsController::class, 'update'])->name('projects.update');
     Route::delete('projects/{project}', [ProjectsController::class, 'destroy'])->name('projects.destroy');
-
 });
 
 require __DIR__.'/auth.php';
