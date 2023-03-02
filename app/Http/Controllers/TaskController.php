@@ -72,7 +72,7 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         $user = Auth::user();
-        $tags = Tags::all();
+        $tags = Tags::where('user_id', '=', $user->id)->get();
         $task['due_date'] = Carbon::parse($task['due_date'])->format('Y-m-d');
 
         if ($task->user_id !== $user->id) {

@@ -164,6 +164,7 @@
                 <h1 class="mt-5 px-2 py-2 rounded-lg flex items-center font-medium text-lg text-gray-700">All Projects</h1>
                 <hr class="mb-2">
                 @foreach($projects as $project)
+                    @if ($project->user_id == auth()->id())
                     <div class="flex justify-between items-center bg-gray-100 p-2 mb-2 rounded border-2 border-transparent font-medium text-gray-700 hover:bg-gray-200">
                         <div class="">
                             <p class="text-gray-900 whitespace-no-wrap text-base font-semibold">
@@ -209,6 +210,7 @@
                                 placeholder="Project Name" name="name" value="{{old('name', $project['name'])}}" required>
                         </form>
                     </div>
+                    @endif
                 @endforeach
             </li>
         </ul>
