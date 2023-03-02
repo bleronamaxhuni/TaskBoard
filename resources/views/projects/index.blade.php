@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -107,6 +105,7 @@
                                                 @endforeach
                                             </span>
                                         </p>
+                                    </td>
                                     <td class="px-5 py-5 bg-white text-sm">
                                         @if($task->due_date != null)
                                         <p class="whitespace-no-wrap text-sm focus:outline-none leading-none  text-center">
