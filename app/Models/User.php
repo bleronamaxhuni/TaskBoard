@@ -47,6 +47,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class,'user_id');
     }
+    public function tags()
+    {
+        return $this->hasMany(Tags::class,'user_id');
+    }
     public function project(): HasMany
     {
         return $this->hasMany(Projects::class,'user_id');
