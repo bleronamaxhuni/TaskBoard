@@ -76,7 +76,7 @@ class TaskController extends Controller
         $task['due_date'] = Carbon::parse($task['due_date'])->format('Y-m-d');
 
         if ($task->user_id !== $user->id) {
-            return redirect()->back()->with('error', 'You are not authorized to access this task.');
+            return redirect()->back()->with('error', 'This task does not exist.');
         }
         return view('tasks.edit', [
             'task' => $task,

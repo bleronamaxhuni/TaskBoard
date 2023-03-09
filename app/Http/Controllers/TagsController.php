@@ -26,7 +26,7 @@ class TagsController extends Controller
         ]);
 
         $tag['user_id'] = Auth::user()->id;
-        dd($tags = Tags::create($tag));
+        $tags = Tags::create($tag);
 
         return back()->with("message","Tag has been created");
     }
