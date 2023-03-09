@@ -78,10 +78,10 @@ class TaskController extends Controller
         if ($task->user_id !== $user->id) {
             return redirect()->back()->with('error', 'This task does not exist.');
         }
-        return view('tasks.edit', [
+        return view('tasks.index', [
             'task' => $task,
             'priorities' => Task::Priorities(),
-            'tags' => $tags,
+            // 'tags' => $tags,
             'projects' => Projects::all()
         ]);
     }
@@ -96,7 +96,6 @@ class TaskController extends Controller
             'priority' => 'nullable',
             'tags' => 'array|nullable'
         ]);
-
         $tags = implode(',', $request->tags);
         $tag_ids = explode(',', $tags);
         $task->tags()->sync($tag_ids);

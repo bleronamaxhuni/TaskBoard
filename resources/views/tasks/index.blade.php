@@ -61,7 +61,7 @@
                                         </button>
                                     </form>
                                 </td>
-                                <td  class="px-5 py-5 bg-white text-sm">
+                                <td class="px-5 py-5 bg-white text-sm">
                                     <span>{{ $task->project->name }}</span>
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm">
@@ -123,7 +123,7 @@
                                                 $tag->name }}</span>
                                             @endforeach
                                         </span>
-                                    </p>                                
+                                    </p>
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm">
                                     @if($task->due_date != null)
@@ -135,30 +135,17 @@
                                     </p>
                                     @endif
                                 </td>
-
-                                {{-- <td class="px-5 py-5 bg-white text-sm text-center">
-                                    <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
-                                        <form action="/tasks/{{ $task['id'] }}/completed" method="POST">
-                                            @csrf
-                                            @method('PATCH')
-                                            @if ($task->completed_at == null)
-                                            <button type="submit" class="p-2 rounded bg-red-300 text-red-900">Not
-                                                Completed</button>
-                                            @else
-                                            <button type="submit"
-                                                class="p-2 rounded bg-green-300 text-green-900">Completed</button>
-                                            @endif
-                                        </form>
-                                    </span>
-                                </td> --}}
                                 <td
                                     class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2 h-full">
-                                    <button
+                                    {{-- <button
                                         class="rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"><a
                                             href="/tasks/{{ $task['id'] }}/edit"><i
                                                 class="fa-solid fa-pen-to-square"></i> <span
                                                 class="md:hidden">Edit</span></a>
-                                    </button>
+                                    </button> --}}
+
+                                    <x-layouts.edit-task :task=$task :priorities=$priorities :tags=$tags></x-layouts.edit-task>
+
                                     <form action="/tasks/{{ $task['id'] }}" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -230,6 +217,7 @@
                 }
             }
         }
+
     </script>
 </body>
 
