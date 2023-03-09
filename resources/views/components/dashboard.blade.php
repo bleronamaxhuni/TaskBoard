@@ -1,5 +1,5 @@
 @php
-$currentUserId = Auth::id(); // assuming you're using Laravel's built-in authentication
+$currentUserId = Auth::id();
 $tasks = DB::table('tasks')
             ->where('user_id', $currentUserId)
             ->orderBy('favorite')
@@ -9,16 +9,6 @@ $tasks = DB::table('tasks')
 <div class="flex-1 flex-col relative z-0 overflow-y-auto">
     <x-layouts.topbar></x-layouts.topbar>
     <div class="md:max-w-6xl md:mx-auto px-4 py-8">
-        {{-- <div class="pb-4">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 text-center">
-                        {{ __(Auth::user()->name .", you're logged in!") }}
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-bold text-gray-800">Dashboard</h2>
             <a href="{!!url('/tasks')!!}"> <button
