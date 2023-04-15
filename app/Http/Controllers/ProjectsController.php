@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Projects;
+use App\Models\Tags;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,6 +20,8 @@ class ProjectsController extends Controller
         return view('projects.index', [
             'projects' => $projects,
             'project' => $project,
+            'priorities' => Task::Priorities(),
+            'tags' => Tags::all(),
         ]);
     }
     

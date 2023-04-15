@@ -118,12 +118,14 @@
                                     </td>
                                     <td
                                         class="px-5 py-5 bg-white text-sm flex justify-center md:grid md:grid-cols-2 md:justify-items-center gap-2 h-full">
-                                        <button
+                                        {{-- <button
                                             class="rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300"><a
                                                 href="/tasks/{{ $task['id'] }}/edit"><i
                                                     class="fa-solid fa-pen-to-square"></i> <span
                                                     class="md:hidden">Edit</span></a>
-                                        </button>
+                                        </button> --}}
+                                    <x-layouts.edit-task :task=$task :priorities=$priorities :tags=$tags></x-layouts.edit-task>
+
                                         <form action="/tasks/{{ $task['id'] }}" method="POST">
                                             @csrf
                                             @method('DELETE')

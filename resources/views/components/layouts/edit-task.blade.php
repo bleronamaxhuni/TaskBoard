@@ -50,7 +50,7 @@
                                 <label for="due_date" class="font-bold mb-1 text-gray-700 block">Due
                                     Date</label>
                                 <input type="date" name="due_date" name="due_date" id="due_date"
-                                    value="{{ old('due_date', $task['due_date']->format('Y-m-d'))}}"
+                                    value="{{ old('due_date', $task['due_date'])}}"
                                     class="w-full p-2 mt-2 mb-3  pl-4 pr-4 py-3 leading-none rounded-lg shadow-sm focus:outline-none text-gray-600 font-medium focus:ring focus:ring-blue-50 bg-gray-200">
                             </div>
                         </div>
