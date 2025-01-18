@@ -13,8 +13,8 @@
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease duration-300"
         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
         <!-- Modal -->
-        <div x-show="showModal" class="fixed bg-white rounded-xl shadow-2xl p-4  w-5/12"
-            @click.away="showModal = false" x-transition:enter="transition ease duration-100 transform"
+        <div x-show="showModal" class="fixed bg-white rounded-xl shadow-2xl p-4  w-5/12" @click.away="showModal = false"
+            x-transition:enter="transition ease duration-100 transform"
             x-transition:enter-start="opacity-0 scale-90 translate-y-1"
             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
             x-transition:leave="transition ease duration-100 transform"
@@ -38,7 +38,8 @@
                         type="text" name="task_description" required> {{old('task_description', $task['task_description'])}}
                 </textarea>
                     <label for="tags" class="font-bold mb-1 text-gray-700 block">Tags</label>
-                    <select multiple="multiple" name="tags[]" class="w-full p-2 mt-2 mb-3  pl-4 pr-4 py-3 leading-none rounded-lg shadow-sm focus:outline-none text-gray-600 font-medium focus:ring focus:ring-blue-50 bg-gray-200">
+                    <select multiple="multiple" name="tags[]"
+                        class="w-full p-2 mt-2 mb-3  pl-4 pr-4 py-3 leading-none rounded-lg shadow-sm focus:outline-none text-gray-600 font-medium focus:ring focus:ring-blue-50 bg-gray-200">
                         @foreach($tags as $tag)
                         <option value="{{ $tag->id }}" {{ in_array($tag->id, $task->tags->pluck('id')->toArray()) ?
                             'selected' : '' }}>{{ $tag->name }}</option>
@@ -47,11 +48,10 @@
                     <div class="grid grid-cols-2 gap-2">
                         <div class="mb-5 w-full">
                             <div class="relative">
-                                <label for="due_date" class="font-bold mb-1 text-gray-700 block">Due
-                                    Date</label>
-                                <input type="date" name="due_date" name="due_date" id="due_date"
-                                    value="{{ old('due_date', $task['due_date'])}}"
-                                    class="w-full p-2 mt-2 mb-3  pl-4 pr-4 py-3 leading-none rounded-lg shadow-sm focus:outline-none text-gray-600 font-medium focus:ring focus:ring-blue-50 bg-gray-200">
+                                <label for="due_date" class="font-bold mb-1 text-gray-700 block">Due Date</label>
+                                <input type="date" name="due_date" id="due_date"
+                                    value="{{ old('due_date', $task->due_date ? \Carbon\Carbon::parse($task->due_date)->format('Y-m-d') : '') }}"
+                                    class="w-full p-2 mt-2 mb-3 pl-4 pr-4 py-3 leading-none rounded-lg shadow-sm focus:outline-none text-gray-600 font-medium focus:ring focus:ring-blue-50 bg-gray-200">
                             </div>
                         </div>
                         <div class="mb-5 w-full">

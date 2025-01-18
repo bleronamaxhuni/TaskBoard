@@ -5,19 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tags extends Model
+class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','name'];
-    protected $table = 'tags';
+    protected $fillable = ['name','user_id'];
 
-    public function setNameAttribute($tag){
-        $this->attributes['name']= $tag;
-    }
     public function tasks()
     {
-        return $this->belongsToMany(Task::class,'tasks_tags','task_id','tag_id');
+        return $this->hasMany(Task::class,'project_id');
     }
     public function user()
     {

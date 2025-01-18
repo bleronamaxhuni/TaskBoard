@@ -49,10 +49,10 @@ class User extends Authenticatable
     }
     public function tags()
     {
-        return $this->hasMany(Tags::class,'user_id');
+        return $this->hasMany(Tag::class,'user_id');
     }
-    public function project(): HasMany
+    public function projects(): HasMany
     {
-        return $this->hasMany(Projects::class,'user_id');
+        return $this->hasMany(Project::class,'user_id');
     }
 }
