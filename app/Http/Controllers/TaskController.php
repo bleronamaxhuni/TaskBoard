@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Projects;
-use App\Models\Tags;
+use App\Models\Project;
+use App\Models\Tag;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,79 +14,99 @@ use Illuminate\Validation\Rule;
 
 class TaskController extends Controller
 {
+    /**
+     * Require authentication for all controller actions
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     * Display a paginated list of user's tasks with search functionality
+     * Includes related tags, user, and project data
+     */
     public function index()
     {
-        $currentuser = Auth::user();
-        if (request('search')) {
-            $searchTerm = request('search');
-            $tasks = Task::where(function ($query) use ($searchTerm) {
-                $query->where('task_title', 'like', "%{$searchTerm}%")
-                    ->orWhere('task_description', 'like', "%{$searchTerm}%");
-            })->where('user_id', $currentuser->id)->paginate(5);
-        } else {
-            $tasks = Task::where('user_id', '=', $currentuser->id)->with(['tags', 'user', 'project'])->paginate(5);
-        }
+        $currentUser = Auth::user();
+
+        $searchTerm = request('search');
+
+        $tasks = Task::query()
+            ->where('user_id', $currentUser->id)
+            ->when($searchTerm, function ($query, $searchTerm) {
+                $query->where('task_title', 'like', "%{$searchTerm}%")->orWhere('task_description', 'like', "%{$searchTerm}%");
+            })
+            ->with(['tags', 'user', 'project'])
+            ->paginate(10);
+
         return view('tasks.index', [
             'tasks' => $tasks,
             'priorities' => Task::Priorities(),
-            'tags' => Tags::all(),
-            'projects' => Projects::all(),
+            'tags' => Tag::all(),
+            'projects' => Project::all(),
         ]);
     }
 
+    /**
+     * Show the form for creating a new task
+     */
     public function create()
     {
-        $tags = Tags::all();
-
         return view('tasks.index', [
-            'tags' => $tags,
+            'tags' => Tag::all(),
         ]);
     }
+
+    /**
+     * Store a newly created task in the database
+     * Validates input, creates task, and attaches tags if provided
+     */
     public function store(Request $request)
     {
-
-        $task = $request->validate([
+        $validatedData = $request->validate([
             'task_title' => 'required|max:200',
             'task_description' => 'required|max:100000',
             'due_date' => 'date|after_or_equal:created_at|nullable',
             'priority' => 'nullable',
             'tags' => 'nullable',
-            'project_id' => 'required'
+            'project_id' => 'required',
         ]);
 
-        $task['user_id'] = Auth::user()->id;
+        $validatedData['user_id'] = Auth::user()->id;
 
-        $tasks = Task::create($task);
+        $tasks = Task::create($validatedData);
 
         if ($request->has('tags')) {
             $tasks->tags()->attach(explode(',', $request->tags));
         }
 
-        return back()->with("message", "Task has been created");
+        return back()->with('message', 'Task has been created');
     }
+
+    /**
+     * Show the form for editing an existing task
+     */
     public function edit(Task $task)
     {
         $user = Auth::user();
-        $tags = Tags::where('user_id', '=', $user->id)->get();
-        $task['due_date'] = Carbon::parse($task['due_date'])->format('Y-m-d');
 
         if ($task->user_id !== $user->id) {
             return redirect()->back()->with('error', 'This task does not exist.');
         }
+
+        $task['due_date'] = Carbon::parse($task['due_date'])->format('Y-m-d');
+
         return view('tasks.index', [
             'task' => $task,
             'priorities' => Task::Priorities(),
-            // 'tags' => $tags,
-            'projects' => Projects::all()
+            'projects' => Project::all(),
         ]);
     }
 
-
+    /**
+     * Update the specified existing task in the database
+     */
     public function update(Request $request, Task $task)
     {
         $tasks = $request->validate([
@@ -94,38 +114,47 @@ class TaskController extends Controller
             'task_description' => 'required|max:100000',
             'due_date' => 'date|after_or_equal:created_at|nullable',
             'priority' => 'nullable',
-            'tags' => 'array|nullable'
+            'tags' => 'array|nullable',
         ]);
-        $tags = implode(',', $request->tags);
-        $tag_ids = explode(',', $tags);
-        $task->tags()->sync($tag_ids);
 
         $task->update($tasks);
 
-        return back()->with("message", "Task has been updated");
+        if ($request->has('tags')) {
+            $task->tags()->sync($request->tags);
+        }
+
+        return back()->with('message', 'Task has been updated');
     }
 
-    public function toggleFavorite(Request $request, Task $task)
+    /**
+     * Toggle the favorite status of a task
+     */
+    public function toggleFavorite(Task $task)
     {
-        if ($task->favorite == 0) {
-            $task->update(['favorite' => 1]);
-            return back()->with("message", "Task has been favorited");
-        } else {
-            $task->update(['favorite' => 0]);
-            return back()->with("message", "Task has been unfavorited");
-        }
+        $task->update(['favorite' => !$task->favorite]);
+
+        $message = $task->favorite ? 'Task has been favorited' : 'Task has been unfavorited';
+
+        return back()->with('message', $message);
     }
+
+    /**
+     * Update the progress of a task
+     */
     public function updateProgress(Request $request, Task $task)
     {
         $task->progress = $request->progress;
         $task->save();
 
-        return back()->with("message", "Progress has been added");
+        return back()->with('message', 'Progress has been added');
     }
 
+    /**
+     * Delete a task from the database
+     */
     public function destroy(Task $task)
     {
         $task->delete();
-        return back()->with('message', "Task has been deleted");
+        return back()->with('message', 'Task has been deleted');
     }
 }

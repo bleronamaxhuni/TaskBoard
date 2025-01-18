@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Projects;
-use App\Models\Tags;
+use App\Models\Project;
+use App\Models\Tag;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,50 +11,61 @@ use Illuminate\Support\Facades\Auth;
 class ProjectsController extends Controller
 {
 
-    public function index(Projects $project)
+    /**
+     * Display a listing of projects for the authenticated user
+     */
+    public function index(Project $project)
     {
-        // $user = Auth::user();
-        // $projects = $user->project;
-        $projects = Auth::user()->project;
-
         return view('projects.index', [
-            'projects' => $projects,
+            'projects' => Auth::user()->projects,
             'project' => $project,
             'priorities' => Task::Priorities(),
-            'tags' => Tags::all(),
+            'tags' => Tag::all(),
         ]);
     }
     
+    /**
+     * Store a new project in the database
+     */
     public function store(Request $request)
     {
-        $project = $request->validate([
+        $validated = $request->validate([
             'name' => 'required|max:200'
         ]);
-        $project['user_id'] = Auth::user()->id;
 
-        $projects =  Projects::create($project);
+        Auth::user()->projects()->create($validated);
         
-        return back()->with("message", "Project has been created");
+        return back()->with('message', 'Project has been created');
     }
 
-    public function edit(Projects $project)
+    /**
+     * Show the form for editing an existing project
+     */
+    public function edit(Project $project)
     {
         return view('projects.index',['project'=>$project]);
     }
 
-    public function update(Request $request, Projects $project)
+    /**
+     * Update an existing project in the database
+     */
+    public function update(Request $request, Project $project)
     {
-        $projects = $request->validate([
+        $validated = $request->validate([
             'name' => 'required|max:200',
         ]);
-        $project->update($projects);
+        $project->update($validated);
         
-        return back()->with("message", "Project has been updated");
+        return back()->with('message', 'Project has been updated');
     }
     
-    public function destroy(Projects $project)
+    /**
+     * Delete a project from the database
+     */
+    public function destroy(Project $project)
     {
         $project->delete();
-        return back()->with('message', "Project has been deleted");
+
+        return back()->with('message', 'Project has been deleted');
     }
 }

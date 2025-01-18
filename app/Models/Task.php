@@ -35,7 +35,7 @@ class Task extends Model
     
     public function tags()
     {
-        return $this->belongsToMany(Tags::class, 'tasks_tags', 'task_id', 'tag_id');
+        return $this->belongsToMany(Tag::class, 'tasks_tags', 'task_id', 'tag_id');
     }
 
     public function user()
@@ -44,7 +44,7 @@ class Task extends Model
     }
     public function project()
     {
-        return $this->belongsTo(Projects::class);
+        return $this->belongsTo(Project::class);
     }
 
     public function toggleFavorite()
