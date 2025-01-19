@@ -29,10 +29,15 @@ class TagsController extends Controller
     {
         $tag = $request->validate([
             'name' => 'required|max:200',
+            'color' => 'required|in:red,blue,orange,green,yellow',
         ]);
 
         $tag['user_id'] = Auth::user()->id;
         $tags = Tag::create($tag);
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => 'Tag has been created']);
+        }
 
         return back()->with('message', 'Tag has been created');
     }
@@ -55,8 +60,13 @@ class TagsController extends Controller
     {
         $tags = $request->validate([
             'name' => 'required|max:200',
+            'color' => 'required|in:red,blue,orange,green,yellow',
         ]);
         $tag->update($tags);
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => 'Tag has been created']);
+        }
         return back()->with('message', 'Tag has been updated');
     }
 

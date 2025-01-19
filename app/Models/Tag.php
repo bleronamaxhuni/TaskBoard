@@ -9,7 +9,7 @@ class Tag extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','name'];
+    protected $fillable = ['user_id','name','color'];
     protected $table = 'tags';
 
     public function setNameAttribute($tag){
