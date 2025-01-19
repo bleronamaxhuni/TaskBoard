@@ -1,6 +1,7 @@
 @props(['task', 'priorities', 'tags'])
 
-<tr class="border-b border-gray-200">
+<tr class="border-b border-gray-200 relative">
+
     <td class="px-5 py-5 bg-white text-sm text-center">
         <form action="{{ route('tasks.toggle-favorite', $task) }}" method="POST">
             @csrf
@@ -9,16 +10,38 @@
                 <i class="fa-solid fa-star {{ $task->favorite ? 'text-yellow-400' : 'text-gray-300' }}"></i>
             </button>
         </form>
+
+
     </td>
 
     <td class="px-5 py-5 bg-white text-sm">
         <span class="text-gray-900">{{ $task->project->name }}</span>
     </td>
 
-    <td class="px-5 py-5 bg-white text-sm">
-        <p class="text-gray-900 whitespace-no-wrap">
-            {{ $task->task_title }}
-        </p>
+    <td class="px-5 py-5 bg-white text-sm flex">
+        @if ($task->tags->count() > 0)
+            <div class="flex -space-x-1">
+                @foreach ($task->tags as $tag)
+                    <div
+                        class="w-2 h-6 first:rounded-l-full last:rounded-r-full shadow-sm
+                        {{ match ($tag->color) {
+                            'yellow' => 'bg-yellow-500',
+                            'red' => 'bg-red-500',
+                            'blue' => 'bg-blue-500',
+                            'green' => 'bg-green-500',
+                            'orange' => 'bg-orange-500',
+                            default => 'bg-gray-500',
+                        } }}">
+                    </div>
+                @endforeach
+            </div>
+        @endif
+        <br>
+        <div class="space-y-2">
+            <p class="text-gray-900 whitespace-no-wrap font-medium">
+                {{ $task->task_title }}
+            </p>
+        </div>
     </td>
 
     <td class="px-5 py-5 bg-white text-sm">
@@ -28,7 +51,8 @@
     </td>
 
     <td class="px-5 py-5 bg-white text-sm text-center">
-        <span class="px-3 py-1 rounded-full text-sm
+        <span
+            class="px-3 py-1 rounded-full text-sm
             @switch($task->priority)
                 @case('Urgent')
                     bg-red-100 text-red-800
@@ -50,9 +74,8 @@
     <td class="px-5 py-5 bg-white text-sm text-center">
         <form action="{{ route('tasks.update-progress', $task) }}" method="POST">
             @csrf
-            <select name="progress" 
-                    onchange="this.form.submit()" 
-                    class="rounded-lg px-2 py-1 text-sm font-semibold
+            <select name="progress" onchange="this.form.submit()"
+                class="rounded-lg px-2 py-1 text-sm font-semibold
                     @switch($task->progress)
                         @case('to do')
                             bg-gray-100 text-gray-800
@@ -73,23 +96,13 @@
     </td>
 
     <td class="px-5 py-5 bg-white text-sm text-center">
-        <div class="flex flex-wrap gap-1 justify-center">
-            @foreach ($task->tags as $tag)
-                <span class="px-2 py-1 text-xs bg-gray-200 rounded-full">
-                    {{ $tag->name }}
-                </span>
-            @endforeach
-        </div>
-    </td>
-
-    <td class="px-5 py-5 bg-white text-sm text-center">
-        @if($task->due_date != null)
-        <p class="whitespace-no-wrap text-sm focus:outline-none leading-none  text-center">
-            @if ($task->due_date)
-            <span class="text-red-400 bg-red-50 p-2 border-2  rounded border-red-300">
-                {{ $task->due_date?->format('d/m/Y') }}</span>
-            @endif
-        </p>
+        @if ($task->due_date != null)
+            <p class="whitespace-no-wrap text-sm focus:outline-none leading-none  text-center">
+                @if ($task->due_date)
+                    <span class="text-red-400 bg-red-50 p-2 border-2  rounded border-red-300">
+                        {{ $task->due_date?->format('d/m/Y') }}</span>
+                @endif
+            </p>
         @endif
     </td>
 
@@ -100,10 +113,9 @@
             <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="inline">
                 @csrf
                 @method('DELETE')
-                <button
-                    class="rounded-lg px-4 py-2 bg-red-600 text-red-100 hover:bg-red-700 duration-300"
-                    onclick="deleteFunction();"> <i class="fa-solid fa-trash"></i> <input
-                        type="submit" name="" value="Delete" class="md:hidden">
+                <button class="rounded-lg px-4 py-2 bg-red-600 text-red-100 hover:bg-red-700 duration-300"
+                    onclick="deleteFunction();"> <i class="fa-solid fa-trash"></i> <input type="submit" name=""
+                        value="Delete" class="md:hidden">
                 </button>
             </form>
         </div>
