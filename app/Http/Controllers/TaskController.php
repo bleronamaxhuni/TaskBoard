@@ -38,6 +38,13 @@ class TaskController extends Controller
                 $query->where('task_title', 'like', "%{$searchTerm}%")->orWhere('task_description', 'like', "%{$searchTerm}%");
             })
             ->with(['tags', 'user', 'project'])
+            ->orderByRaw("CASE 
+                WHEN priority = 'Urgent' THEN 1 
+                WHEN priority = 'High' THEN 2 
+                WHEN priority = 'Medium' THEN 3 
+                WHEN priority = 'Low' THEN 4 
+                ELSE 5 
+            END")
             ->paginate(10);
 
         return view('tasks.index', [
