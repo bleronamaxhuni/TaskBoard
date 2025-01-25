@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Notifications\TaskDueNotification;
 
 class Task extends Model
 {
@@ -53,4 +54,23 @@ class Task extends Model
         $this->save();
     }
 
+    public function sendDueNotification()
+    {
+        if ($this->due_date && $this->due_date->diffInHours(now()) <= 24) {
+            $this->user->notify(new TaskDueNotification($this));
+        }
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($task) {
+            $task->sendDueNotification();
+        });
+
+        static::updated(function ($task) {
+            if ($task->isDirty('due_date')) {
+                $task->sendDueNotification();
+            }
+        });
+    }
 }

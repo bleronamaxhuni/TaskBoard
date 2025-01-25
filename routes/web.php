@@ -55,4 +55,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('projects/{project}', [ProjectsController::class, 'destroy'])->name('projects.destroy');
 });
 
+Route::post('/notifications/{notification}/mark-as-read', function ($notification) {
+    $notification = auth()->user()->notifications()->findOrFail($notification);
+    $notification->markAsRead();
+    return response()->json(['success' => true]);
+})->name('notifications.mark-as-read');
+
 require __DIR__.'/auth.php';
